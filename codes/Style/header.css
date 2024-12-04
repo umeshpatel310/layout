@@ -147,7 +147,7 @@
 .optin{
   
   display: flex;
-  overflow: hidden;  /* Hide content that overflows */
+    /* Hide content that overflows */
   width: 100%;
 }
   
