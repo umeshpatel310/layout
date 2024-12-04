@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="Style/header.css">
+
+    <style>
+          /* Withdrawal form styles */
+          .payment-container {
+            display: grid;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            border: 1px solid rgb(0, 0, 0);
+        }
+
+        .payment-container input {
+            padding: 5px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            border: 1px solid rgb(48, 42, 42);
+        }
+
+        .payment-container form {
+            display: grid;
+            padding: 5px;
+            margin: 10px 0;
+            align-self: center;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        .payment-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .payment-container button:hover {
+            background-color: #45a049;
+        }
+
+        .loop input {
+            color: #ccc;
+            width: 0%;
+            border: 0px solid rgb(255, 249, 249);
+        }
+
+        /* Transaction History Section */
+        .transaction-history {
+            margin-top: 40px;
+           
+            text-align: left;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .transaction-history h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .transaction-item {
+            background-color: #fff;
+            padding: 5px;
+            
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .transaction-item p {
+            margin: 5px 0;
+        }
+
+        .disply{
+            justify-content: space-between;
+            display: flex;
+        }
+    </style>
+     <style>
+        /* Header styles */
+        
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #fffefe;
+        }
+
+        /* Profile container styles */
+        .profile-container {
+            max-width: 100%;
+            margin-top: 30px;
+            background-color: rgb(0, 0, 0);
+            padding: 20px;
+            display: grid;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .profile-container img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+        }
+
+        .profile-container h2 {
+            margin-top: 10px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .profile-container p {
+            font-size: 16px;
+            color: white;
+            margin-top: 3px;
+        }
+
+        .wallet-balance {
+            margin-top: 13px;
+            font-size: 20px;
+            color: #fdf901;
+            font-weight: bold;
+        }
+
+        /* Update profile form styles */
+        .update-profile-container {
+            margin-top: 30px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .update-profile-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .update-profile-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .update-profile-container button:hover {
+            background-color: #45a049;
+        }
+
+        /* Edit option styles */
+        .edit-option {
+            cursor: pointer;
+            color: #887f7f;
+            text-decoration: underline;
+            margin-left: 10px;
+        }
+
+        .editable-field {
+            display: inline-block;
+            padding: 5px;
+            color: white;
+            border-radius: 5px;
+           
+        }
+
+        .editable-input {
+            width: 100%;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+
+<style>
+    /* Custom Notification Styles */
+    .notification {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        font-size: 16px;
+        display: none; /* Hidden by default */
+        z-index: 1000; /* Ensure it appears above other content */
+    }
+</style>
+
+</head>
+<body>
+
+    <header>
+       
+        <div class="left">
+            <span class="menu-btn" onclick="toggleMenu()">☰</span> <!-- Menu Button -->
+        </div>
+
+        <div class="center">
+            <h1>HonestTurnament.Com</h1>
+        </div>
+        <div class="right">
+            <div class="wallet">
+                <img src="Image/Wallate.png" alt="Wallet" class="icon">
+                <span class="amount" id="wallet-amount">₹0</span> <!-- This will be updated dynamically -->
+            </div>
+            <img src="Image/share.png" alt="Share" class="icon">
+        </div>
+    </header>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">×</a>
+        <a href="pubg.html">Home</a>
+        <a href="profile.html">My Account</a> 
+        <a href="matchList.html">Match Results</a>     
+        <a href="support.html">Support</a>
+        <a href="login.html" onclick="logout()">Log Out</a>
+    </div>
+
+    <script>
+        // Toggle the sidebar menu open/close
+        function toggleMenu() {
+            const sidebar = document.getElementById("mySidebar");
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+            } else {
+                sidebar.style.width = "250px";
+            }
+        }
+    
+        // Logout Function (clear local storage/session storage)
+        function logout() {
+            localStorage.removeItem('userUID');  // Remove UID from localStorage (or sessionStorage if used)
+            window.location.href = "login.html";  // Redirect to login page
+        }
+    </script>
+
+<div class="profile-container">
+    <div class="profile">
+
+        <img id="profile-pic" src="profile.png" alt="Profile Picture">
+    </div>
+   
+    <div class="editable-field">
+        <span id="user-name">User_name...</span>
+        <span class="edit-option" id="edit-name-option">edit</span>
+    </div>
+    <p id="user-email">...</p>
+    <p id="user-number">....</p>
+
+    <div class="editable-field">
+        <span id="plyerid">Your - gameID</span>
+        <span class="edit-option" id="edit-playerid-option">edit</span>
+    </div>
+    <div class="wallet-balance" id="wallet-balance">₹0</div>
+</div>
+    <!-- Withdrawal Form -->
+<div class="payment-container">
+    <h3>Withdraw Amount</h3>
+    <form id="saving">
+        <input type="number" id="sa" placeholder="Enter Amount to save" required>
+        <input type="text" id="id" placeholder="Enter UPI ID" required>
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+<!-- Custom Notification -->
+<div id="notification" class="notification">
+    Saving request submitted successfully.
+</div>
+
+
+<!-- Transaction History Section -->
+<div class="transaction-history">
+    <h3>Wallet Transaction History</h3>
+    <div id="transaction-list">
+        <!-- Transaction items will be injected here dynamically -->
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+    import { getDatabase, ref, get, update, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBy1GnNAIpiTbF8bcE960GROx9JVyyn3Ro",
+        authDomain: "testapp-6bd8a.firebaseapp.com",
+        databaseURL: "https://testapp-6bd8a-default-rtdb.firebaseio.com",
+        projectId: "testapp-6bd8a",
+        storageBucket: "testapp-6bd8a.appspot.com",
+        messagingSenderId: "1083835564982",
+        appId: "1:1083835564982:web:7ef2ecfe620f7f81d43717",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+
+    function showNotification(message) {
+    const notification = document.getElementById('notification');
+    notification.innerText = message;  // Set the message
+    notification.style.display = 'block';  // Show the notification
+
+    // Hide it after 3 seconds
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 3000);  // Change 3000 to any duration in milliseconds
+}
+
+
+    let currentUser = null;
+
+    function loadUserProfile() {
+    const user = auth.currentUser;  // Get the current authenticated user
+    currentUser = user;  // Store the user for later use
+
+    if (user) {
+        // Fetch user details from Firebase Realtime Database
+        const userRef = ref(database, 'users/' + user.uid);
+        get(userRef).then(snapshot => {
+            const userData = snapshot.val();
+            
+            // Display the user details on the page
+            document.getElementById('user-name').innerText = userData.name;
+            document.getElementById('user-number').innerText = userData.mobileNumber;
+            document.getElementById('user-email').innerText = userData.email;
+            document.getElementById('plyerid').innerText = userData.playerID;
+
+            // Set Profile Picture (if available)
+            const profilePic = userData.profilePicture || "image/pp.png";
+            document.getElementById('profile-pic').src = profilePic;
+
+            // Display wallet balance (initial load)
+            const walletAmount = userData.walletAmount || 0;
+            document.getElementById('wallet-balance').innerText = `Wallet Balance: ₹${walletAmount}`;
+            document.getElementById('wallet-amount').innerText = ` ₹${walletAmount}`;
+        }).catch(error => {
+            console.error("Error loading user profile:", error);
+        });
+
+        // Listen for real-time updates to wallet amount
+        const walletRef = ref(database, 'users/' + user.uid + '/walletAmount');
+        onValue(walletRef, (snapshot) => {
+            const walletAmount = snapshot.val() || 0;
+
+            // Update both elements in real-time
+            document.getElementById('wallet-balance').innerText = `Wallet Balance: ₹${walletAmount}`;
+            document.getElementById('wallet-amount').innerText = ` ₹${walletAmount}`;
+        });
+
+    } else {
+        // Redirect to login page if no user is authenticated
+        window.location.href = 'login.html';
+    }
+}
+
+    // Load user profile when page is ready
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            loadUserProfile();  // Load user details if authenticated
+            loadTransactionHistory();  // Load transaction history
+        } else {
+            window.location.href = 'login.html';  // Redirect to login if not authenticated
+        }
+    });
+
+    // Function to load transaction history
+   // Function to load transaction history
+function loadTransactionHistory() {
+    if (currentUser) {
+        const transactionRef = ref(database, 'transactions/' + currentUser.uid);  // Reference to the 'transactions' node
+        onValue(transactionRef, (snapshot) => {
+            const transactions = snapshot.val();
+            const transactionList = document.getElementById('transaction-list');
+            transactionList.innerHTML = '';  // Clear existing transactions
+
+            if (transactions) {
+                // Convert the transactions object into an array of objects
+                const transactionArray = Object.keys(transactions).map(transactionId => ({
+                    id: transactionId,
+                    ...transactions[transactionId]
+                }));
+
+                // Sort the transactions by timestamp in descending order (latest first)
+                transactionArray.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+                // Loop through the sorted transactions and display them
+                transactionArray.forEach(transaction => {
+                    const transactionElement = document.createElement('div');
+                    transactionElement.classList.add('transaction-item');
+                    transactionElement.innerHTML = `
+                        <div class="disply" id="disid">
+                            <p style="font-size: 11px;"><strong>UPI ID:</strong> ${transaction.upiId}</p>
+                            <p style="font-size: 11px;"><strong>Status:</strong> ${transaction.status}</p>
+                            <p style="font-size: 11px;"><strong>Amount:</strong> ₹${transaction.amount}</p>
+                            <p style="font-size: 11px;"><strong>Transaction Time:</strong> ${new Date(transaction.timestamp).toLocaleString()}</p>
+                            <p style="font-size: 11px;"><strong>Type:</strong> ${transaction.out}</p>
+                        </div>
+                    `;
+                    transactionList.appendChild(transactionElement);
+                });
+            } else {
+                transactionList.innerHTML = '<p>No transactions found.</p>';
+            }
+        });
+    }
+}
+
+
+    // Handle saving form submission
+    document.getElementById('saving').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const savingAmount = parseFloat(document.getElementById('sa').value);
+        const upiId = document.getElementById('id').value;
+
+        if (isNaN(savingAmount) || savingAmount <= 0) {
+            alert('Please enter a valid amount.');
+            return;
+        }
+
+        if (!upiId) {
+            alert('Please enter a valid UPI ID.');
+            return;
+        }
+
+        // Fetch current wallet balance
+        const userRef = ref(database, 'users/' + currentUser.uid);
+        get(userRef).then(snapshot => {
+            const userData = snapshot.val();
+            let currentBalance = userData.walletAmount;
+
+            if (currentBalance >= savingAmount) {
+                // Reduce wallet balance
+                const newBalance = currentBalance - savingAmount;
+                update(userRef, { walletAmount: newBalance });
+
+                // Save saving record under 'saved/{userId}/savingRecords' node
+                const savingRef = ref(database, 'transactions/' + currentUser.uid);
+               
+                const newSavingRef = push(savingRef);// Create a new push ID for each saving record
+
+                const savingRef2 = ref(database, 'withdrwal/' + currentUser.uid);
+                const newSavingRef2 = push(savingRef2);
+
+                // Save saving data with the new generated ID
+                set(newSavingRef, {
+                    amount: savingAmount,
+                    upiId: upiId,
+                    status: "pending",
+                    out: "out",
+                    timestamp: new Date().toISOString()
+                }).then(() => {
+                    console.log("Saving details saved successfully.");
+
+                    // Update wallet balance on UI
+                    document.getElementById('wallet-balance').innerText = `Wallet Balance: ₹${newBalance}`;
+
+                    // Clear the form
+                    document.getElementById('sa').value = '';
+                    document.getElementById('id').value = '';
+
+                    // Reload the transaction history
+                    loadTransactionHistory();
+
+                    
+
+                    showNotification('Please enter a valid amount.');
+                    
+                }).catch((error) => {
+                    console.error("Error saving saving details:", error);
+                });
+
+
+                set(newSavingRef2, {
+                    amount: savingAmount,
+                    upiId: upiId,
+                    status: "pending",
+                    out: "withdrwal",
+                    timestamp: new Date().toISOString()
+                }).then(() => {
+                    
+
+                   
+
+                    // Clear the form
+                    document.getElementById('sa').value = '';
+                    document.getElementById('id').value = '';
+
+                    // Reload the transaction history
+                    loadTransactionHistory();
+
+                    
+                }).catch((error) => {
+                   
+                });
+
+
+            } else {
+                alert('Insufficient balance.');
+            }
+        }).catch(error => {
+            console.error('Error fetching user data:', error);
+        });
+    });
+</script>
+
+</body>
+</html>
