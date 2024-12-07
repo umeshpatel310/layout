@@ -319,19 +319,23 @@
 document.getElementById('addBalanceForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
-    const addAmount = parseFloat(document.getElementById('addAmount').value);
-    
-    // Validate the amount
-    if (isNaN(addAmount) || addAmount < 1) {
-        alert('Please enter a valid amount. The minimum amount is ₹1.');
-        return;
-    }
+   const addAmount = parseFloat(document.getElementById('addAmount').value);
 
-    // Prepare UPI Intent URL for Payment
-   const upiUrl = `upi://pay?pa=6260323397@ptyes&pn=Umesh Patel&mc=123456&tid=txn${new Date().getTime()}&am=${addAmount}&cu=INR&tn=Add+Balance`;
+// Validate the amount
+if (isNaN(addAmount) || addAmount < 1) {
+    alert('Please enter a valid amount. The minimum amount is ₹1.');
+    return;
+}
 
-    // Open UPI payment app
-    window.location.href = upiUrl;
+// Format the amount to 2 decimal places
+const formattedAmount = addAmount.toFixed(2);
+
+// Prepare UPI Intent URL for Payment
+const upiUrl = `upi://pay?pa=6260323397@ptyes&pn=Umesh Patel&mc=123456&tid=txn${new Date().getTime()}&am=${formattedAmount}&cu=INR&tn=Add+Balance`;
+
+// Open UPI payment app
+window.location.href = upiUrl;
+
 
     // After redirecting, there is no immediate callback from the UPI app.
     // You'll need a separate mechanism to handle the success/failure of the payment.
