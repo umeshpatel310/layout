@@ -137,65 +137,58 @@
 }
 
 
-.optin{
-  
-  overflow-x: auto; /* Horizontal scrolling allow karta hai */
-   /  /* Hide content that overflows */
-  
-}
-  
-  
-.Llist, .Mlist {
-  flex: 0 0 auto;
-  margin-right: 20px;
+/* Main container for scrolling */
+.optin {
+    width: 100%; /* Set container width to 100% */
+    overflow: hidden; /* Hide the overflow to create a clean scroll effect */
+    padding: 10px 0; /* Space around the scrollable area */
+    background-color: #fff; /* Background color */
 }
 
-.main-nav {
- 
-  margin-left: 2px;
-  align-items: center;
-}
-.sec-nav {
-  
- 
-  align-items: center;
-
+/* Llist container */
+.Llist {
+    display: flex; /* Flexbox use to arrange children horizontally */
+    animation: scroll-left 20s linear infinite; /* Animation for scrolling */
 }
 
-
+/* Navigation list */
 .nav-list {
-  display: flex;
-  justify-content: center; /* Center the nav items horizontally */
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  animation: scroll-left 30s linear infinite;  /* 15s is the duration of one full scroll cycle */
-
-    
+    display: flex; /* Flexbox layout for horizontal items */
+    padding: 0;
+    margin: 0;
+    list-style-type: none; /* Remove bullet points */
 }
 
-  
- 
-
+/* Each list item styling */
 .nav-list li {
-  margin: 0 15px; /* Horizontal spacing between items */
+    margin-right: 20px; /* Spacing between each list item */
 }
 
+/* Link styling */
 .nav-list a {
-  text-decoration: none;
-  background: #0c0c0c;
-  color: #f3f0f0;
-  font-size: 1.1em;
-  padding: 10px;
-  display: block; /* Makes the entire link area clickable */
-  border-radius: 5px; /* Rounded corners for the links */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 20px; /* Padding for better clickability */
+    display: inline-block;
+    color: white; /* Text color */
+    background-color: rgb(0, 123, 255); /* Default background color */
+    border-radius: 5px; /* Rounded corners */
+    font-weight: bold;
 }
 
+/* Hover effect on links */
 .nav-list a:hover {
-  background-color: #c50c0c;
-  color: white;
+    background-color: rgb(0, 105, 215); /* Change background on hover */
 }
- 
+
+/* Keyframes for scrolling animation */
+@keyframes scroll-left {
+    0% {
+        transform: translateX(100%); /* Start from right */
+    }
+    100% {
+        transform: translateX(-100%); /* End at left */
+    }
+}
 
   
  
