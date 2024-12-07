@@ -315,37 +315,36 @@
 </div>
 
 <script>
-  // Handle Add Balance form submission
-document.getElementById('addBalanceForm').addEventListener('submit', function (event) {
+ document.getElementById('addBalanceForm').addEventListener('submit', function (event) {
     event.preventDefault();
-    generateUPILink();
-        });
 
-        function generateUPILink() {
-           
-          const personalUpiId = 'anilp4393-4@okicici'; // Replace with your personal UPI ID
-const amount = document.getElementById('addAmount').value;
+    const addAmount = parseFloat(document.getElementById('addAmount').value);
+     const personalUpiId = 'anilp4393-4@okicici';
+    
+    // Validate the amount
+    if (isNaN(addAmount) || addAmount < 1) {
+        alert('Please enter a valid amount. The minimum amount is 1.');
+        return;
+    }
 
-if (amount) {
     const transactionNote = 'Payment for Service';
     const currencyCode = 'INR';
     const transactionId = 'TXN' + new Date().getTime(); // Unique transaction ID
     const transactionRefId = 'REF' + new Date().getTime(); // Unique reference ID
 
-    const upiLink = `upi://pay?pa=${personalUpiId}&pn=Your Name&mc=0000&tid=${transactionId}&tr=${transactionRefId}&tn=${transactionNote}&am=${amount}&cu=${currencyCode}`;
+    const upiLink = `upi://pay?pa=${personalUpiId}&pn=Your Name&mc=0000&tid=${transactionId}&tr=${transactionRefId}&tn=${transactionNote}&am=${addAmount}&cu=${currencyCode}`;
 
     // Redirect to UPI app
     window.location.href = upiLink;
 
-    // Set timeout to alert user if transaction is not completed
+    // After redirecting, there is no immediate callback from the UPI app.
+    // You'll need a separate mechanism to handle the success/failure of the payment.
+    
+    // Optional: You can show a loading spinner here and check payment result later using a backend service or callback from a UPI gateway.
     setTimeout(() => {
         alert("Transaction not confirmed. Please try again.");
-    }, 15000); // Timeout set to 15 seconds
-} else {
-    alert("Please enter the amount!");
-}
-
-        }
+    }, 15000); // Set a timeout in case the user doesn't complete the payment
+});
 
 // Listen for UPI payment result (you may need to integrate with a UPI gateway for this)
 window.addEventListener("message", function(event) {
