@@ -325,9 +325,10 @@
             alert('Please enter a valid amount. The minimum amount is ₹5.');
             return;
         }
+        const formattedAmount = Math.floor(addAmount);
 
         // Prepare UPI Intent URL for Payment
-        const upiUrl = `upi://pay?pa=7646920449@ibl&pn=HonestTurnament&mc=123456&tid=txn${new Date().getTime()}&am=${addAmount}&cu=INR&tn=Add+Balance`;
+          const upiUrl = `upi://pay?pa=7646920449@ibl&pn=HonestTurnament&mc=123456&tid=txn${new Date().getTime()}&am=${formattedAmount}&cu=INR&tn=Add+Balance`;
 
         // Call Android native code using JavaScript interface
         if (window.AndroidInterface) {
