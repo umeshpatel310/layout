@@ -318,33 +318,36 @@
   // Handle Add Balance form submission
 document.getElementById('addBalanceForm').addEventListener('submit', function (event) {
     event.preventDefault();
+    generateUPILink();
+        });
 
-   const addAmount = parseFloat(document.getElementById('addAmount').value);
+        function generateUPILink() {
+           
+            const amount = document.getElementById('addAmount').value;
+            
+            if (upiId && amount) {
+                const merchantUpiId = 'anilp4393-4@okicici'; // Replace with actual merchant UPI ID
+                const transactionNote = 'Payment for Service';
+                const currencyCode = 'INR';
+                const transactionId = 'TXN' + new Date().getTime(); // Unique transaction ID
+                const transactionRefId = 'REF' + new Date().getTime(); // Unique reference ID
 
-// Validate the amount
-if (isNaN(addAmount) || addAmount < 1) {
-    alert('Please enter a valid amount. The minimum amount is ₹1.');
-    return;
-}
+                const upiLink = `upi://pay?pa=${merchantUpiId}&pn=Merchant&mc=0000&tid=${transactionId}&tr=${transactionRefId}&tn=${transactionNote}&am=${amount}&cu=${currencyCode}`;
 
-// Format the amount to 2 decimal places
-const formattedAmount = addAmount.toFixed(2);
+                // Show a loading message or spinner if needed
+                alert('Redirecting to UPI payment gateway... Please complete the transaction.');
 
-// Prepare UPI Intent URL for Payment
-const upiUrl = `upi://pay?pa=anilp4393-4@okicici&pn=Anil Patel&mc=123456&tid=txn${new Date().getTime()}&am=${formattedAmount}&cu=INR&tn=Add+Balance`;
+                // Open the UPI link in the UPI app
+                window.location.href = upiLink;
 
-// Open UPI payment app
-window.location.href = upiUrl;
-
-
-    // After redirecting, there is no immediate callback from the UPI app.
-    // You'll need a separate mechanism to handle the success/failure of the payment.
-    
-    // Optional: You can show a loading spinner here and check payment result later using a backend service or callback from a UPI gateway.
-    setTimeout(() => {
-        alert("Transaction not confirmed. Please try again.");
-    }, 15000); // Set a timeout in case the user doesn't complete the payment
-});
+                // Set a timeout to wait for 15 seconds, after which an alert will pop up if no payment is completed
+                setTimeout(() => {
+                    alert("Transaction not confirmed. Please try again.");
+                }, 15000); // Timeout set to 15 seconds
+            } else {
+                alert("Please fill out both UPI ID and Amount!");
+            }
+        }
 
 // Listen for UPI payment result (you may need to integrate with a UPI gateway for this)
 window.addEventListener("message", function(event) {
