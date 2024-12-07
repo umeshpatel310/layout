@@ -1,0 +1,321 @@
+
+    
+    
+
+   header {
+         display: flex;
+         justify-content: space-between;
+          align-items: center;
+          padding: 1px 2px;
+           background-color: #0c0c0c;
+           color: white;
+         border: 3px solid blue; 
+   }
+  
+  
+  
+  
+  
+  .left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+    
+  }
+  
+  
+  .menu-btn {
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  
+  
+  
+  .center {
+    flex-grow: 1;
+    text-align: left;
+    padding-left: 16px;
+  }
+  
+  h1 {
+    font-size: 20px;
+  }
+  
+  .right {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .icon {
+    width: 55px;
+    height: auto;
+    margin-left: 1px;
+    cursor: pointer;
+  }
+  
+  .wallet {
+    display: flex;
+    align-items: center;
+  }
+  
+  .amount {
+    margin-left: 0.1px;
+    font-size: 26px;
+    font-weight: bold;
+    color: #ffd700; /* Gold color for the amount */
+  }  
+
+
+    
+ /* Sidebar Menu Styles */
+ .sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #0c0c0c;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+    z-index: 1000;
+}
+
+.sidebar a {
+    /* padding: 8px 8px 8px 32px; */
+    padding-top: 11px;
+    padding-bottom: 11px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #ffffff;
+    display: block;
+    transition: 0.3s;
+    border: 0.1px solid rgb(57, 57, 58); 
+}
+
+.sidebar a:hover {
+    background-color: #07ac07;
+    color: white;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 30px;
+    margin-bottom: 6px;
+    margin-left: 40px;
+}
+
+.open-menu-btn {
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+}
+
+  
+.download-link {
+  display: inline-block;
+  margin-top: 4px;
+  margin-bottom: 9px;
+  padding: 2px 2px;
+  background-color: #d60d0d;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 15px;
+  display: inline-block;
+}
+
+
+.download-link:hover {
+  background-color: #0056b3;
+}
+
+
+.optin{
+  
+  display: flex;
+  overflow: hidden;  /* Hide content that overflows */
+  width: 100%;
+}
+  
+  
+.Llist, .Mlist {
+  flex: 0 0 auto;
+  margin-right: 20px;
+}
+
+.main-nav {
+ 
+  margin-left: 2px;
+  align-items: center;
+}
+.sec-nav {
+  
+ 
+  align-items: center;
+
+}
+
+
+.nav-list {
+  display: flex;
+  justify-content: center; /* Center the nav items horizontally */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  animation: scroll-left 30s linear infinite;  /* 15s is the duration of one full scroll cycle */
+
+    
+}
+
+  
+ 
+
+.nav-list li {
+  margin: 0 15px; /* Horizontal spacing between items */
+}
+
+.nav-list a {
+  text-decoration: none;
+  background: #0c0c0c;
+  color: #f3f0f0;
+  font-size: 1.1em;
+  padding: 10px;
+  display: block; /* Makes the entire link area clickable */
+  border-radius: 5px; /* Rounded corners for the links */
+}
+
+.nav-list a:hover {
+  background-color: #c50c0c;
+  color: white;
+}
+ 
+
+  
+ 
+   
+ 
+
+
+
+
+  /* Style for the popup */
+  .popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: left;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+.popup textarea {
+    width: 100%;
+    height: 150px;
+    margin-bottom: 10px;
+}
+.popup button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+.popup button:hover {
+    background-color: #0056b3;
+}
+.rules-button {
+    padding: 10px 20px;
+    background-color: #c01515;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+.rules-button:hover {
+    background-color: #218838;
+}
+
+
+body {
+    background-color: rgb(235, 226, 226);
+    font-family: Arial, sans-serif;
+}
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+.match-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.match-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+.match-header .match-date {
+    font-size: 14px;
+    color: gray;
+}
+.details-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.details-row p {
+    margin: 0;
+    font-size: 14px;
+}
+.join-btn-container {
+    text-align: center;
+}
+.join-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.join-btn:hover {
+    background-color: #e7120b;
+}
+.match-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    margin-top: 15px;
+    border-radius: 8px;
+    display: none;  /* Initially hide the images */
+}
