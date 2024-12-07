@@ -322,7 +322,7 @@ document.getElementById('addBalanceForm').addEventListener('submit', function (e
     const addAmount = parseFloat(document.getElementById('addAmount').value);
     
     // Validate the amount
-    if (isNaN(addAmount) || addAmount < 50) {
+    if (isNaN(addAmount) || addAmount < 1) {
         alert('Please enter a valid amount. The minimum amount is ₹50.');
         return;
     }
