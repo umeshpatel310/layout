@@ -321,13 +321,13 @@
         const addAmount = parseFloat(document.getElementById('addAmount').value);
         
         // Validate the amount
-        if (isNaN(addAmount) || addAmount < 50) {
-            alert('Please enter a valid amount. The minimum amount is ₹50.');
+        if (isNaN(addAmount) || addAmount < 5) {
+            alert('Please enter a valid amount. The minimum amount is ₹5.');
             return;
         }
 
         // Prepare UPI Intent URL for Payment
-        const upiUrl = `upi://pay?pa=merchant@upi&pn=HonestTurnament&mc=123456&tid=txn${new Date().getTime()}&am=${addAmount}&cu=INR&tn=Add+Balance`;
+        const upiUrl = `upi://pay?pa=anilp4393-4@okicici&pn=HonestTurnament&mc=123456&tid=txn${new Date().getTime()}&am=${addAmount}&cu=INR&tn=Add+Balance`;
 
         // Call Android native code using JavaScript interface
         if (window.AndroidInterface) {
