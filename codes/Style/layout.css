@@ -2,15 +2,15 @@
     
     
 
-   header {
-         display: flex;
-         justify-content: space-between;
-          align-items: center;
-          padding: 1px 2px;
-           background-color: #0c0c0c;
-           color: white;
-         border: 3px solid blue; 
-   }
+ header {
+  display: flex;
+  justify-content: center;
+   align-items: center;
+   padding: 1px ;
+    background-color: #0c0c0c;
+    color: white;
+  border: 1px solid blue; 
+}
   
   
   
@@ -44,7 +44,7 @@
   }
   
   h1 {
-    font-size: 20px;
+    font-size: 15px;
   }
   
   .right {
@@ -53,24 +53,15 @@
     align-items: center;
   }
   
-  .icon {
-    width: 55px;
-    height: auto;
-    margin-left: 1px;
-    cursor: pointer;
-  }
+ 
   
-  .wallet {
-    display: flex;
-    align-items: center;
-  }
-  
+ 
   .amount {
     margin-left: 0.1px;
-    font-size: 26px;
+    font-size: 18px;
     font-weight: bold;
     color: #ffd700; /* Gold color for the amount */
-  }  
+  }   
 
 
     
