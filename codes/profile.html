@@ -328,7 +328,7 @@ document.getElementById('addBalanceForm').addEventListener('submit', function (e
     }
 
     // Prepare UPI Intent URL for Payment
-    const upiUrl = `upi://pay?pa=merchant@upi&pn=MerchantName&mc=123456&tid=txn${new Date().getTime()}&am=${addAmount}&cu=INR&tn=Add+Balance`;
+    const upiUrl = `upi://pay?pa=anilp4393-4@okicici=HonestTurnament&mc=123456&tid=txn${new Date().getTime()}&am=${addAmount}&cu=INR&tn=Add+Balance`;
 
     // Open UPI payment app
     window.location.href = upiUrl;
