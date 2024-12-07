@@ -323,30 +323,28 @@ document.getElementById('addBalanceForm').addEventListener('submit', function (e
 
         function generateUPILink() {
            
-            const amount = document.getElementById('addAmount').value;
-            
-            if (upiId && amount) {
-                const merchantUpiId = 'anilp4393-4@okicici'; // Replace with actual merchant UPI ID
-                const transactionNote = 'Payment for Service';
-                const currencyCode = 'INR';
-                const transactionId = 'TXN' + new Date().getTime(); // Unique transaction ID
-                const transactionRefId = 'REF' + new Date().getTime(); // Unique reference ID
+          const personalUpiId = 'anilp4393-4@okicici'; // Replace with your personal UPI ID
+const amount = document.getElementById('addAmount').value;
 
-                const upiLink = `upi://pay?pa=${merchantUpiId}&pn=Merchant&mc=0000&tid=${transactionId}&tr=${transactionRefId}&tn=${transactionNote}&am=${amount}&cu=${currencyCode}`;
+if (amount) {
+    const transactionNote = 'Payment for Service';
+    const currencyCode = 'INR';
+    const transactionId = 'TXN' + new Date().getTime(); // Unique transaction ID
+    const transactionRefId = 'REF' + new Date().getTime(); // Unique reference ID
 
-                // Show a loading message or spinner if needed
-                alert('Redirecting to UPI payment gateway... Please complete the transaction.');
+    const upiLink = `upi://pay?pa=${personalUpiId}&pn=Your Name&mc=0000&tid=${transactionId}&tr=${transactionRefId}&tn=${transactionNote}&am=${amount}&cu=${currencyCode}`;
 
-                // Open the UPI link in the UPI app
-                window.location.href = upiLink;
+    // Redirect to UPI app
+    window.location.href = upiLink;
 
-                // Set a timeout to wait for 15 seconds, after which an alert will pop up if no payment is completed
-                setTimeout(() => {
-                    alert("Transaction not confirmed. Please try again.");
-                }, 15000); // Timeout set to 15 seconds
-            } else {
-                alert("Please fill out both UPI ID and Amount!");
-            }
+    // Set timeout to alert user if transaction is not completed
+    setTimeout(() => {
+        alert("Transaction not confirmed. Please try again.");
+    }, 15000); // Timeout set to 15 seconds
+} else {
+    alert("Please enter the amount!");
+}
+
         }
 
 // Listen for UPI payment result (you may need to integrate with a UPI gateway for this)
