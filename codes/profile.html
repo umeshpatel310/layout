@@ -314,75 +314,88 @@
     </div>
 </div>
 
-<script>
- document.getElementById('addBalanceForm').addEventListener('submit', function (event) {
-    event.preventDefault();
+<script> 
+    document.getElementById('addBalanceForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        
+        const addAmount = parseFloat(document.getElementById('addAmount').value);
+        
+        // Validate the amount
+        if (isNaN(addAmount) || addAmount < 50) {
+            alert('Please enter a valid amount. The minimum amount is ₹50.');
+            return;
+        }
 
-    const addAmount = parseFloat(document.getElementById('addAmount').value);
-     const personalUpiId = 'anilp4393-4@okicici';
-    
-    // Validate the amount
-    if (isNaN(addAmount) || addAmount < 1) {
-        alert('Please enter a valid amount. The minimum amount is 1.');
-        return;
-    }
+        // Prepare UPI Intent URL for Payment
+        const upiUrl = `upi://pay?pa=merchant@upi&pn=HonestTurnament&mc=123456&tid=txn${new Date().getTime()}&am=${addAmount}&cu=INR&tn=Add+Balance`;
 
-    const transactionNote = 'Payment for Service';
-    const currencyCode = 'INR';
-    const transactionId = 'TXN' + new Date().getTime(); // Unique transaction ID
-    const transactionRefId = 'REF' + new Date().getTime(); // Unique reference ID
+        // Call Android native code using JavaScript interface
+        if (window.AndroidInterface) {
+            window.AndroidInterface.initiateUPIPayment(upiUrl);
+        } else {
+            alert('UPI Payment initiation failed!');
+        }
+    });
 
-    const upiLink = `upi://pay?pa=${personalUpiId}&pn=Your Name&mc=0000&tid=${transactionId}&tr=${transactionRefId}&tn=${transactionNote}&am=${addAmount}&cu=${currencyCode}`;
+    // Listen for UPI payment result (success or failure)
+    window.addEventListener("message", function(event) {
+        const result = event.data;  // Result from UPI app (success or failure)
+        
+        if (result.status === 'success') {
+            // Fetch the user reference in Firebase
+            const userRef = firebase.database().ref('users/' + currentUser.uid);
+            
+            // Fetch the current user's data from Firebase
+            firebase.database().ref(userRef).once('value').then(snapshot => {
+                const userData = snapshot.val();
+                
+                if (userData) {
+                    const currentBalance = userData.walletAmount || 0;
+                    const newBalance = currentBalance + addAmount;  // Adding the amount to the current balance
 
-    // Redirect to UPI app
-    window.location.href = upiLink;
-
-    // After redirecting, there is no immediate callback from the UPI app.
-    // You'll need a separate mechanism to handle the success/failure of the payment.
-    
-    // Optional: You can show a loading spinner here and check payment result later using a backend service or callback from a UPI gateway.
-    setTimeout(() => {
-        alert("Transaction not confirmed. Please try again.");
-    }, 15000); // Set a timeout in case the user doesn't complete the payment
-});
-
-// Listen for UPI payment result (you may need to integrate with a UPI gateway for this)
-window.addEventListener("message", function(event) {
-    const result = event.data;  // Result from UPI app (success or failure)
-    
-    if (result.status === 'success') {
-        // Update wallet balance in Firebase
-        const userRef = ref(database, 'users/' + currentUser.uid);
-        get(userRef).then(snapshot => {
-            const userData = snapshot.val();
-            const currentBalance = userData.walletAmount || 0;
-            const newBalance = currentBalance + addAmount; // Add the entered amount
-
-            // Update the user's wallet balance
-            update(userRef, { walletAmount: newBalance });
-
-            // Save the transaction details in Firebase
-            const transactionRef = ref(database, 'transactions/' + currentUser.uid);
-            const newTransactionRef = push(transactionRef);
-
-            set(newTransactionRef, {
-                amount: addAmount,
-                status: "success",
-                out: "in", // Adding money is considered an "in" transaction
-                timestamp: new Date().toISOString()
-            }).then(() => {
-                showNotification('Balance added successfully!');
-                // Update the wallet balance on the page
-                document.getElementById('wallet-balance').innerText = `Wallet Balance: ₹${newBalance}`;
-            }).catch((error) => {
-                console.error("Error saving transaction details:", error);
+                    // Update the user's wallet balance in Firebase
+                    userRef.update({ walletAmount: newBalance })
+                        .then(() => {
+                            // After the wallet balance is updated, save the transaction details
+                            const transactionRef = firebase.database().ref('transactions/' + currentUser.uid);
+                            const newTransactionRef = transactionRef.push();
+                            
+                            // Save the transaction details in Firebase
+                            return newTransactionRef.set({
+                                amount: addAmount,
+                                status: "success",
+                                out: "in", // "in" means the user is adding money
+                                timestamp: new Date().toISOString()
+                            });
+                        })
+                        .then(() => {
+                            // Notify the user that the balance was successfully updated
+                            showNotification('Balance added successfully!');
+                            
+                            // Optionally, update the wallet balance on the page
+                            document.getElementById('wallet-balance').innerText = `Wallet Balance: ₹${newBalance}`;
+                        })
+                        .catch((error) => {
+                            console.error("Error saving transaction or updating wallet balance:", error);
+                            alert('There was an error processing your payment. Please try again.');
+                        });
+                } else {
+                    alert('User data not found!');
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching user data from Firebase:", error);
+                alert('Error fetching user data. Please try again.');
             });
-        });
-    } else if (result.status === 'failure') {
-        alert('Payment Failed! Please try again.');
-    }
-});
+        } else if (result.status === 'failure') {
+            alert('Payment Failed! Please try again.');
+        }
+    });
 
+    // Notification function (optional)
+    function showNotification(message) {
+        alert(message);
+    }
 </script>
 
 
