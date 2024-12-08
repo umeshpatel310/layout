@@ -60,7 +60,7 @@
 
         /* Transaction History Section */
         .transaction-history {
-            margin-top: 40px;
+            margin-top: 20px;
            
             text-align: left;
             padding: 20px;
@@ -213,6 +213,79 @@
     }
 </style>
 
+<style>
+    /* Basic styling */
+   
+
+    .container {
+        text-align: center;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+   
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        background-color: #28a745;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+
+    #popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .popup-content {
+        background-color: #fff;
+        padding: 30px;
+        text-align: center;
+        width: 300px;
+        border-radius: 10px;
+    }
+
+    .popup-content img {
+        width: 100%;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .popup-content input {
+        width: 80%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .popup-content button {
+        background-color: #007bff;
+        border-radius: 5px;
+    }
+
+    .popup-content button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
 </head>
 <body>
 
@@ -283,11 +356,25 @@
 
  <!-- Add Balance Form -->
 <div class="payment-container">
-    <h3>Add Balance</h3>
-    <form id="addBalanceForm">
-        <input type="number" id="addAmount" placeholder="Enter Amount to Add" required>
-        <button style="background-color: blue;" type="submit">Add</button>
-    </form>
+    
+        <h3>Add Wallet</h3>
+        <input type="number" id="addAmount" placeholder="Enter amount" min="50" required>
+        <button style="background-color: blue;" id="submitbtnB">Add</button>
+    
+</div>
+
+<div id="popup">
+    <div class="popup-content">
+        <!-- Image Preview in Popup -->
+        <img src="Image/qrcode.png" alt="Download Image" id="popupImage">
+        <!-- Download Button for the Image -->
+        <a href="Image/qrcode.png" download="qrcode.png">
+            <button>Download Image</button>
+        </a>
+        <!-- User Input Field -->
+        <input type="text" id="userInput" placeholder="Enter details">
+        <button id="submitBtn">Submit</button>
+    </div>
 </div>
 
     <!-- Withdrawal Form -->
@@ -309,95 +396,11 @@
 <!-- Transaction History Section -->
 <div class="transaction-history">
     <h3>Wallet Transaction History</h3>
-    <div id="transaction-list">
+    <div style="margin-bottom: 10px;" id="transaction-list">
         <!-- Transaction items will be injected here dynamically -->
     </div>
 </div>
 
-<script> 
-    document.getElementById('addBalanceForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-        
-        const addAmount = parseFloat(document.getElementById('addAmount').value);
-        
-        // Validate the amount
-        if (isNaN(addAmount) || addAmount < 5) {
-            alert('Please enter a valid amount. The minimum amount is ₹5.');
-            return;
-        }
-        const formattedAmount = Math.floor(addAmount);
-
-        // Prepare UPI Intent URL for Payment
-          const upiUrl = `upi://pay?pa=7646920449@ibl&pn=HonestTurnament&mc=123456&tid=txn${new Date().getTime()}&am=${formattedAmount}&cu=INR&tn=Add+Balance`;
-
-        // Call Android native code using JavaScript interface
-        if (window.AndroidInterface) {
-            window.AndroidInterface.initiateUPIPayment(upiUrl);
-        } else {
-            alert('UPI Payment initiation failed!');
-        }
-    });
-
-    // Listen for UPI payment result (success or failure)
-    window.addEventListener("message", function(event) {
-        const result = event.data;  // Result from UPI app (success or failure)
-        
-        if (result.status === 'success') {
-            // Fetch the user reference in Firebase
-            const userRef = firebase.database().ref('users/' + currentUser.uid);
-            
-            // Fetch the current user's data from Firebase
-            firebase.database().ref(userRef).once('value').then(snapshot => {
-                const userData = snapshot.val();
-                
-                if (userData) {
-                    const currentBalance = userData.walletAmount || 0;
-                    const newBalance = currentBalance + addAmount;  // Adding the amount to the current balance
-
-                    // Update the user's wallet balance in Firebase
-                    userRef.update({ walletAmount: newBalance })
-                        .then(() => {
-                            // After the wallet balance is updated, save the transaction details
-                            const transactionRef = firebase.database().ref('transactions/' + currentUser.uid);
-                            const newTransactionRef = transactionRef.push();
-                            
-                            // Save the transaction details in Firebase
-                            return newTransactionRef.set({
-                                amount: addAmount,
-                                status: "success",
-                                out: "in", // "in" means the user is adding money
-                                timestamp: new Date().toISOString()
-                            });
-                        })
-                        .then(() => {
-                            // Notify the user that the balance was successfully updated
-                            showNotification('Balance added successfully!');
-                            
-                            // Optionally, update the wallet balance on the page
-                            document.getElementById('wallet-balance').innerText = `Wallet Balance: ₹${newBalance}`;
-                        })
-                        .catch((error) => {
-                            console.error("Error saving transaction or updating wallet balance:", error);
-                            alert('There was an error processing your payment. Please try again.');
-                        });
-                } else {
-                    alert('User data not found!');
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching user data from Firebase:", error);
-                alert('Error fetching user data. Please try again.');
-            });
-        } else if (result.status === 'failure') {
-            alert('Payment Failed! Please try again.');
-        }
-    });
-
-    // Notification function (optional)
-    function showNotification(message) {
-        alert(message);
-    }
-</script>
 
 
 <script type="module">
@@ -489,6 +492,91 @@
         }
     });
 
+     // Function to show the popup
+     function showPopup() {
+        const amount = document.getElementById("addAmount").value;
+        if (amount && amount >= 50) {
+            document.getElementById("popup").style.display = "flex";
+        } else {
+            alert("Please enter a valid amount (Minimum ₹50)");
+        }
+    }
+
+    // Function to submit the form and save data to Firebase
+    // Function to submit the form and save data to Firebase
+// Function to submit the form and save data to Firebase
+function submitForm() {
+    const amount = document.getElementById("addAmount").value;
+    const userInput = document.getElementById("userInput").value;
+
+    // New fields for saving records
+    const savingAmount = amount; // You can use the same amount or another value if needed
+    const upiId = userInput; // Assuming user input is UPI ID or another required field
+
+    if (amount && userInput && currentUser) {
+        // Get the current timestamp
+        const timestamp = new Date().toISOString();
+
+        // Prepare the data to be saved to Firebase under 'AddAmount'
+        const data = {
+            amount: amount,
+            userInput: userInput,
+            timestamp: timestamp,
+        };
+
+        // Save the data to 'AddAmount/{userId}'
+        const userRef = ref(database, "AddAmount/" + currentUser.uid);
+        push(userRef, data)
+            .then(() => {
+                console.log('Amount data saved under AddAmount.');
+                
+                // Now, save the saving record to 'transactions/{userId}/savingRecords'
+                const savingRef = ref(database, 'transactions/' + currentUser.uid );
+                
+                // Create a new push ID for each saving record
+                const newSavingRef = push(savingRef);
+
+                // Save the saving data with the new generated ID
+                set(newSavingRef, {
+                    amount: savingAmount,
+                    upiId: upiId,
+                    status: "pending",  // Initial status set to 'pending'
+                    out: "Add",         // Set 'out' status as required
+                    timestamp: timestamp
+                })
+                .then(() => {
+                    alert("Data submitted successfully!");
+                    document.getElementById("popup").style.display = "none"; // Hide popup
+                })
+                .catch((error) => {
+                    alert("Error saving saving record: " + error.message);
+                    console.error("Saving record error:", error); // Log error for better debugging
+                });
+            })
+            .catch((error) => {
+                alert("Error saving amount data: " + error.message);
+                console.error("Amount saving error:", error); // Log error for better debugging
+            });
+    } else {
+        alert("Please enter all required fields and ensure you're logged in.");
+    }
+}
+
+
+
+    // Add event listener to the Add button to show the popup
+    document.getElementById('submitbtnB').addEventListener('click', showPopup);
+
+    // Add event listener to the Submit button
+    document.getElementById('submitBtn').addEventListener('click', submitForm);
+
+    // Close the popup if clicked outside of it
+    window.onclick = function(event) {
+        if (event.target == document.getElementById("popup")) {
+            document.getElementById("popup").style.display = "none";
+        }
+    };
+
     // Function to load transaction history
    // Function to load transaction history
 function loadTransactionHistory() {
@@ -518,8 +606,8 @@ function loadTransactionHistory() {
                             <p style="font-size: 11px;"><strong>UPI ID:</strong> ${transaction.upiId}</p>
                             <p style="font-size: 11px;"><strong>Status:</strong> ${transaction.status}</p>
                             <p style="font-size: 11px;"><strong>Amount:</strong> ₹${transaction.amount}</p>
-                            <p style="font-size: 11px;"><strong>Transaction Time:</strong> ${new Date(transaction.timestamp).toLocaleString()}</p>
-                            <p style="font-size: 11px;"><strong>Type:</strong> ${transaction.out}</p>
+                            <p style="font-size: 11px;"><strong>Time:</strong> ${new Date(transaction.timestamp).toLocaleString()}</p>
+                            <p style="font-size: 11px; coler:blue;"><strong>Type:</strong> ${transaction.out}</p>
                         </div>
                     `;
                     transactionList.appendChild(transactionElement);
