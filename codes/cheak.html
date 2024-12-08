@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Upload Example</title>
+</head>
+<body>
+    <h1>Upload Text to Firebase</h1>
+
+    <!-- Text input and button for uploading data -->
+    <input type="text" id="textInput" placeholder="Enter text to upload" />
+    <button id="uploadButton">Upload Text</button>
+
+    <!-- Display success or error message -->
+    <p id="statusMessage"></p>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Firebase SDK (v9 or later)
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js';
+        import { getDatabase, ref, set, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js';
+    
+        // Firebase configuration (replace with your own Firebase project credentials)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy1GnNAIpiTbF8bcE960GROx9JVyyn3Ro",
+            authDomain: "testapp-6bd8a.firebaseapp.com",
+            databaseURL: "https://testapp-6bd8a-default-rtdb.firebaseio.com",
+            projectId: "testapp-6bd8a",
+            storageBucket: "testapp-6bd8a.appspot.com",
+            messagingSenderId: "1083835564982",
+            appId: "1:1083835564982:web:7ef2ecfe620f7f81d43717",
+        };
+    
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth(app);
+    
+        // Function to upload text to Firebase
+        async function uploadText() {
+            const text = document.getElementById('textInput').value;
+            
+            // Check for the authenticated user
+            const user = auth.currentUser;
+    
+            if (!user) {
+                // If no user is authenticated
+                document.getElementById('statusMessage').textContent = "You need to sign in to upload text.";
+                return;
+            }
+    
+            // Check if the user is the authorized one
+            const authorizedUid = 'yMpXzSsy7HOWWTmEI1EXLVvEyTq1'; // Specify allowed UID
+            if (user.uid !== authorizedUid) {
+                // If the authenticated user is not the allowed one
+                document.getElementById('statusMessage').textContent = "You are not authorized to upload text.";
+                return;
+            }
+    
+            if (text.trim() === "") {
+                document.getElementById('statusMessage').textContent = "Please enter some text.";
+                return;
+            }
+    
+            try {
+                // Reference to your Firebase Realtime Database node
+                const textRef = ref(database, 'uploadedTexts/' + Date.now()); // Use timestamp for unique key
+    
+                // Save the text along with timestamp
+                await set(textRef, {
+                    text: text,
+                    timestamp: serverTimestamp(),
+                    userId: user.uid,  // Store the UID of the user uploading the text
+                });
+    
+                // Show success message
+                document.getElementById('statusMessage').textContent = "Text uploaded successfully!";
+                document.getElementById('textInput').value = ""; // Clear input field
+    
+            } catch (error) {
+                document.getElementById('statusMessage').textContent = "Error uploading text: " + error.message;
+            }
+        }
+    
+        // Add event listener to the button to call uploadText function on click
+        document.getElementById('uploadButton').addEventListener('click', uploadText);
+    </script>
+    
+</body>
+</html>
