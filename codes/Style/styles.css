@@ -1,0 +1,75 @@
+      /* Overall body styling */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    
+    /* Main container for scrolling */
+    .optin {
+        width: 100%; /* Set container width to 100% */
+        overflow: hidden; /* Hide the overflow to create a clean scroll effect */
+        padding: 10px 0; /* Space around the scrollable area */
+        background-color: #fff; /* Background color */
+    }
+    
+    /* Llist container */
+    .Llist {
+        display: flex; /* Flexbox use to arrange children horizontally */
+        animation: scroll-left 20s linear infinite; /* Animation for scrolling */
+    }
+    
+    /* Navigation list */
+    .nav-list {
+        display: flex; /* Flexbox layout for horizontal items */
+        padding: 0;
+        margin: 0;
+        list-style-type: none; /* Remove bullet points */
+    }
+    
+    /* Each list item styling */
+    .nav-list li {
+        margin-right: 20px; /* Spacing between each list item */
+    }
+    
+    /* Link styling */
+    .nav-list a {
+        text-decoration: none; /* Remove underline */
+        padding: 10px 20px; /* Padding for better clickability */
+        display: inline-block;
+        color: white; /* Text color */
+        background-color: rgb(0, 123, 255); /* Default background color */
+        border-radius: 5px; /* Rounded corners */
+        font-weight: bold;
+    }
+    
+    /* Hover effect on links */
+    .nav-list a:hover {
+        background-color: rgb(0, 105, 215); /* Change background on hover */
+    }
+    
+    /* Keyframes for scrolling animation */
+    @keyframes scroll-left {
+        0% {
+            transform: translateX(100%); /* Start from right */
+        }
+        100% {
+            transform: translateX(-100%); /* End at left */
+        }
+    }
+
+     /* Custom Notification Styles */
+     .notification {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        font-size: 16px;
+        display: none; /* Hidden by default */
+        z-index: 1000; /* Ensure it appears above other content */
+        }
