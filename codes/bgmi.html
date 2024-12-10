@@ -31,7 +31,7 @@
         </div>
         <div class="right">
             <div class="wallet">
-               
+                
                 <span class="amount" id="wallet-amount">₹0</span> <!-- This will be updated dynamically -->
             </div>
             
@@ -44,7 +44,6 @@
         <a href="profile.html">My Account</a> 
         <a href="matchList.html">Match Results</a>     
         <a href="support.html">Support</a>
-        <a href="support.html">Share</a>
         <a href="login.html" onclick="logout()">Log Out</a>
     </div>
 
@@ -74,8 +73,8 @@
                 <ul class="nav-list">
                     <li><a href="pubg.html" >PUBG</a></li>
                     <li><a href="freefire.html" >Ffire</a></li>
-                    <li><a  style="text-decoration-thickness: 5px; background-color: rgb(255, 0, 0);">BGMI</a></li>
-                    <li><a href="callofduty.html">COD</a></li>
+                    <li><a href="bgmi.html" >BGMI</a></li>
+                    <li><a style="text-decoration-thickness: 5px; background-color: rgb(255, 0, 0);" >COD</a></li>
                 </ul>
             </nav>
         </div>
@@ -116,7 +115,6 @@
       </div>
 
       <marquee style="color: rgb(255, 0, 0); font: bold;">Befor join Match Please Read Rules...!  Befor join Match Please Read Rules...!  Befor join Match Please Read Rules...!</marquee>
-
 
       <div id="notification" class="notification"></div>
 
@@ -181,8 +179,6 @@
         const database = getDatabase(app);
         const auth = getAuth(app);
 
-
-
         function loadUserData() {
     const userUID = localStorage.getItem('userUID');  // Get the UID from localStorage
     if (!userUID) {
@@ -211,8 +207,8 @@
     });
 }
 
- // Function to show notification
- function showNotification(message, type = 'success') {
+// Function to show notification
+function showNotification(message, type = 'success') {
             const notification = document.getElementById('notification');
             notification.innerText = message;
             notification.style.display = 'block';
@@ -230,15 +226,14 @@
             }, 3000);
         }
 
-
 // Load user data when the page loads
 window.onload = loadUserData;
 
     
         function fetchAllMatchData(userId) {
-    const matchRef = ref(database, 'bgmimatchs/');
+    const matchRef = ref(database, 'callofduty/');
 
-    // Set up a real-time listener for changes to the 'bgmimatchs/' path
+    // Set up a real-time listener for changes to the 'callofduty/' path
     onValue(matchRef, (snapshot) => {
         const data = snapshot.val();
         
@@ -335,7 +330,7 @@ function createMatchCard(matchData, sanitizedMatchNumber) {
 
     matchDiv.innerHTML = `
         <div class="match-header">
-            <h3>${matchData.matchNumber}</h3>
+            <h3> ${matchData.matchNumber}</h3>
            <p class="match-date">Match Date: ${formatDate(matchData.date)}</p>
         </div>
         <div class="match-details">
@@ -446,7 +441,7 @@ function handleUserJoinStatus(userId, sanitizedMatchNumber, matchData) {
     const joinBtn = document.getElementById(`joinBtn_${sanitizedMatchNumber}`);
     
     // Fetch match data (entryFees)
-    const matchRef = ref(database, `bgmimatchs/${sanitizedMatchNumber}`);
+    const matchRef = ref(database, `callofduty/${sanitizedMatchNumber}`);
     get(matchRef).then((snapshot) => {
         const matchData = snapshot.val();
         const entryFees = parseFloat(matchData.entryFees); // Ensure it's a valid number
@@ -481,7 +476,7 @@ function handleUserJoinStatus(userId, sanitizedMatchNumber, matchData) {
                 walletAmount: newWalletAmount  // Update wallet balance
             }).then(() => {
                 // Update the totalPlayers count in the match
-                const matchRef = ref(database, `bgmimatchs/${sanitizedMatchNumber}`);
+                const matchRef = ref(database, `callofduty/${sanitizedMatchNumber}`);
                 update(matchRef, {
                     totalPlayers: (parseInt(totalPlayers) + 1)  // Increment the totalPlayers count
                 });
@@ -500,15 +495,15 @@ function handleUserJoinStatus(userId, sanitizedMatchNumber, matchData) {
                 // Optionally, show a success message
                 showNotification(`You have successfully joined Match ${sanitizedMatchNumber} and ₹${entryFees} has been deducted from your wallet!`);
             }).catch((error) => {
-                
-                showNotification("Faild joining the match. Please try again.",'error');
+                console.error("Error updating wallet or match data:", error);
+                showNotification(" error joining the match. Please try again.",'error');
             });
         }).catch((error) => {
-            
+            console.error("Error fetching user data:", error);
             showNotification("Unable to fetch your user data.",'error');
         });
     }).catch((error) => {
-       
+        console.error("Error fetching match data:", error);
         showNotification("Unable to fetch match data.",'error');
     });
 }
