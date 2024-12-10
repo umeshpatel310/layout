@@ -12,10 +12,11 @@
           .payment-container {
             display: grid;
             background-color: #fff;
-            padding: 20px;
+            padding: 10px;
+            
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 30px;
+            margin-top: 3px;
             border: 1px solid rgb(0, 0, 0);
         }
 
@@ -24,7 +25,7 @@
             margin: 10px 0;
             border-radius: 5px;
             border: 1px solid #ccc;
-            width: 100%;
+            width: 96%;
             border: 1px solid rgb(48, 42, 42);
         }
 
@@ -40,8 +41,8 @@
 
         .payment-container button {
             width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
+            padding: 4px;
+            background-color: #185e1b;
             color: white;
             border: none;
             border-radius: 5px;
@@ -49,7 +50,7 @@
         }
 
         .payment-container button:hover {
-            background-color: #45a049;
+            background-color: #3a0aaa;
         }
 
         .loop input {
@@ -120,8 +121,8 @@
 
         .profile-container img {
             border-radius: 50%;
-            width: 100px;
-            height: 100px;
+            width: 50px;
+            height: 50px;
         }
 
         .profile-container h2 {
@@ -138,9 +139,9 @@
 
         .wallet-balance {
             margin-top: 13px;
-            font-size: 20px;
-            color: #fdf901;
-            font-weight: bold;
+            font-size: 14px;
+            color: #eeea10;
+            
         }
 
         /* Update profile form styles */
@@ -198,6 +199,15 @@
             padding: 5px;
             border-radius: 5px;
             border: 1px solid #ccc;
+        }
+
+        .input-container {
+            display: none;
+            margin-top: 10px;
+        }
+        .input-containersec {
+            display: none;
+            margin-top: 10px;
         }
     </style>
 
@@ -334,12 +344,22 @@
         <span id="user-name">User_name...</span>
         <span class="edit-option" id="edit-name-option">edit</span>
     </div>
+
+    <div class="input-container" id="input-container">
+        <input type="text" id="edit-name-input" placeholder="new username"/>
+        <button onclick="updateusername()" id="save-button">Save</button>
+    </div>
     <p id="user-email">...</p>
     <p id="user-number">....</p>
 
     <div class="editable-field">
         <span id="plyerid">Your - gameID</span>
         <span class="edit-option" id="edit-playerid-option">edit</span>
+    </div>
+
+    <div class="input-containersec" id="input-containersec">
+        <input type="text" id="edit-name-inputsec" placeholder="New plyear id"/>
+        <button onclick="updateplyearid()" id="save-buttonsec">Save</button>
     </div>
     <div class="wallet-balance" id="wallet-balance">₹0</div>
 </div>
@@ -390,6 +410,57 @@
     </div>
 </div>
 
+<script>
+    // Getting elements by their IDs
+    const editNameOption = document.getElementById('edit-name-option');
+    const userName = document.getElementById('user-name');
+    const inputContainer = document.getElementById('input-container');
+    const editNameInput = document.getElementById('edit-name-input');
+    const saveButton = document.getElementById('save-button');
+
+    // Edit button click event
+    editNameOption.addEventListener('click', () => {
+        // Show the input field and set the value to the current name
+        inputContainer.style.display = 'block';
+        editNameInput.value = userName.textContent;
+        editNameOption.style.display = 'none';  // Hide the edit button
+    });
+
+    // Save button click event
+    saveButton.addEventListener('click', () => {
+        // Update the user name with the input value
+        userName.textContent = editNameInput.value;
+        inputContainer.style.display = 'none';  // Hide the input field
+        editNameOption.style.display = 'inline';  // Show the edit button again
+    });
+</script>
+
+<script>
+    // Getting elements by their IDs
+    const editNameOptionsec = document.getElementById('edit-playerid-option');
+    const userNamesec = document.getElementById('plyerid');
+    const inputContainersec = document.getElementById('input-containersec');
+    const editNameInputsec = document.getElementById('edit-name-inputsec');
+    const saveButtonsec = document.getElementById('save-buttonsec');
+
+    // Edit button click event
+    editNameOptionsec.addEventListener('click', () => {
+        // Show the input field and set the value to the current name
+        inputContainersec.style.display = 'block';
+        editNameInputsec.value = userNamesec.textContent;
+        editNameOptionsec.style.display = 'none';  // Hide the edit button
+    });
+
+    // Save button click event
+    saveButtonsec.addEventListener('click', () => {
+        // Update the user name with the input value
+        userNamesec.textContent = editNameInputsec.value;
+        inputContainersec.style.display = 'none';  // Hide the input field
+        editNameOptionsec.style.display = 'inline';  // Show the edit button again
+    });
+</script>
+
+
 
 
 <script type="module">
@@ -438,6 +509,39 @@
     function loadUserProfile() {
     const user = auth.currentUser;  // Get the current authenticated user
     currentUser = user;  // Store the user for later use
+
+     // Function to update only wallet amount in Firebase (without affecting other fields)
+     window.updateusername = function() {
+        const newWalletAmount = document.getElementById('edit-name-input').value;
+
+        // Update only the walletAmount field in the user's data
+        const userRef = ref(database, 'users/' + currentUser.uid);
+
+        // Use update() to update only the walletAmount field, leaving other fields unchanged
+        update(userRef, {
+            name: newWalletAmount // Only update walletAmount
+        }).then(() => {
+            showNotification("user name update");
+        }).catch((error) => {
+            showNotification("Error updating user name: " + error.message);
+        }); 
+    } 
+
+    window.updateplyearid = function() {
+        const plyearid = document.getElementById('edit-name-inputsec').value;
+
+        // Update only the walletAmount field in the user's data
+        const userRef = ref(database, 'users/' + currentUser.uid);
+
+        // Use update() to update only the walletAmount field, leaving other fields unchanged
+        update(userRef, {
+            playerID: plyearid // Only update walletAmount
+        }).then(() => {
+            showNotification("Plyaer id  updated");
+        }).catch((error) => {
+            showNotification("Error updating Plyaer id: " + error.message);
+        });
+    }
 
     if (user) {
         // Fetch user details from Firebase Realtime Database
@@ -576,8 +680,30 @@ function submitForm() {
         }
     };
 
-    // Function to load transaction history
-   // Function to load transaction history
+   
+    
+    function formatDate(date) {
+    const d = new Date(date);
+
+    // Get day, month, year
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+
+    // Get hours, minutes, seconds
+    let hours = d.getHours();
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    const seconds = String(d.getSeconds()).padStart(2, '0');
+
+    // Determine AM or PM
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? String(hours).padStart(2, '0') : '12'; // The hour '0' should be '12'
+
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds} ${ampm}`;
+}
+  
+// Function to load transaction history
 function loadTransactionHistory() {
     if (currentUser) {
         const transactionRef = ref(database, 'transactions/' + currentUser.uid);  // Reference to the 'transactions' node
@@ -600,13 +726,32 @@ function loadTransactionHistory() {
                 transactionArray.forEach(transaction => {
                     const transactionElement = document.createElement('div');
                     transactionElement.classList.add('transaction-item');
+                    
+                    // Set the status color based on the transaction status
+                    let statusColor = '';
+                    if (transaction.status === 'pending') {
+                        statusColor = 'blue';
+                    } else if (transaction.status === 'success') {
+                        statusColor = 'green';
+                    } else if (transaction.status === 'fail') {
+                        statusColor = 'red';
+                    }
+
+                     // Set the status color based on the transaction status
+                     let outColor = '';
+                    if (transaction.out === 'Add') {
+                        outColor = 'green';
+                    } else if (transaction.out === 'out') {
+                        outColor = 'red';
+                    }
+
                     transactionElement.innerHTML = `
                         <div class="disply" id="disid">
                             <p style="font-size: 11px;"><strong>UPI ID:</strong> ${transaction.upiId}</p>
-                            <p style="font-size: 11px;"><strong>Status:</strong> ${transaction.status}</p>
+                            <p style="font-size: 11px; color: ${statusColor};"><strong>Status:</strong> ${transaction.status}</p>
                             <p style="font-size: 11px;"><strong>Amount:</strong> ₹${transaction.amount}</p>
-                            <p style="font-size: 11px;"><strong>Time:</strong> ${new Date(transaction.timestamp).toLocaleString()}</p>
-                            <p style="font-size: 11px; "><strong>Type:</strong> ${transaction.out}</p>
+                            <p style="font-size: 11px;"><strong>Time:</strong> ${formatDate(transaction.timestamp)}</p>
+                            <p style="font-size: 11px; color: ${outColor}; "><strong>Type:</strong> ${transaction.out}</p>
                         </div>
                     `;
                     transactionList.appendChild(transactionElement);
@@ -617,6 +762,7 @@ function loadTransactionHistory() {
         });
     }
 }
+
 
 
     // Handle saving form submission
