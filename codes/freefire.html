@@ -277,6 +277,51 @@ function sanitizeString(str) {
     return str.replace(/[^a-zA-Z0-9]/g, "_");
 }
 
+function formatDate(date) {
+    const d = new Date(date);
+
+    // Get day, month, year
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+
+    // Get hours, minutes, seconds
+    let hours = d.getHours();
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    const seconds = String(d.getSeconds()).padStart(2, '0');
+
+    // Determine AM or PM
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? String(hours).padStart(2, '0') : '12'; // The hour '0' should be '12'
+
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds} ${ampm}`;
+}
+
+function startCountdown(matchDate, sanitizedMatchNumber) {
+    const countdownElement = document.getElementById(`countdown_${sanitizedMatchNumber}`);
+
+    // Update countdown every second
+    const countdownInterval = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = matchDate.getTime() - now;
+
+        // Time calculations
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));  // Calculate days
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));  // Calculate hours
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));  // Calculate minutes
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);  // Calculate seconds
+
+        // Display the result
+        if (distance > 0) {
+            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s remaining`;
+        } else {
+            countdownElement.innerHTML = "Time's up!";
+            clearInterval(countdownInterval);  // Stop the countdown once the match has started
+        }
+    }, 1000);
+}
+
 // Helper function to create match card HTML structure
 function createMatchCard(matchData, sanitizedMatchNumber) {
     const matchDiv = document.createElement('div');
@@ -286,7 +331,7 @@ function createMatchCard(matchData, sanitizedMatchNumber) {
     matchDiv.innerHTML = `
         <div class="match-header">
             <h3>${matchData.matchNumber}</h3>
-            <p class="match-date">Match Date: ${new Date(matchData.date).toLocaleString()}</p>
+           <p class="match-date">Match Date: ${formatDate(matchData.date)}</p>
         </div>
         <div class="match-details">
             <div class="details-row">
@@ -465,28 +510,6 @@ function handleUserJoinStatus(userId, sanitizedMatchNumber, matchData) {
 
 
 
-function startCountdown(matchDate, sanitizedMatchNumber) {
-    const countdownElement = document.getElementById(`countdown_${sanitizedMatchNumber}`);
-
-    // Update countdown every second
-    const countdownInterval = setInterval(function() {
-        const now = new Date().getTime();
-        const distance = matchDate.getTime() - now;
-
-        // Time calculations
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Display the result
-        if (distance > 0) {
-            countdownElement.innerHTML = `${hours}h ${minutes}m ${seconds}s remaining`;
-        } else {
-            countdownElement.innerHTML = "Time's up!";
-            clearInterval(countdownInterval); // Stop the countdown once the match has started
-        }
-    }, 1000);
-}
     </script>
 
     
