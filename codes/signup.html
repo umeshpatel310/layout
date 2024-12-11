@@ -73,6 +73,11 @@
             0% { transform: translate(-50%, -50%) rotate(0deg); }
             100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -97,6 +102,7 @@
         <input type="email" id="signup-email" class="input-field" placeholder="Enter your email" required>
         <input type="text" id="signup-name" class="input-field" placeholder="Enter your Name" required>
         <input type="text" id="signup-id" class="input-field" placeholder="Enter your Game Id" required>
+        <p id="errorMessage" class="error" style="display:none;"></p>
         <input type="text" id="signup-mnum" class="input-field" placeholder="Enter your Mobile Number" required>
         <div id="loadingSpinner" class="loading-spinner"></div>
         <input type="password" id="signup-password" class="input-field" placeholder="Enter your password" required>
@@ -125,12 +131,62 @@
         // Importing Firebase services (modular approach)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+        import { getDatabase, ref, set,get } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const database = getDatabase(app);
+
+         // Get the form elements
+    const playerIDInput = document.getElementById('signup-id');
+    const checkButton = document.getElementById('signup-button');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Handle input event to check player ID automatically
+    playerIDInput.addEventListener('input', function() {
+        const playerID = playerIDInput.value.trim();
+
+        // Check if playerID is empty
+        if (!playerID) {
+            errorMessage.textContent = "Player ID cannot be empty.";
+            errorMessage.style.display = 'block';
+            checkButton.disabled = true;  // Disable button when input is empty
+            return;
+        }
+
+        // Reference to the users node in Firebase
+        const usersRefcheak = ref(database, 'users');
+
+        // Check if the playerID exists in the users > userID > playerID path
+        get(usersRefcheak).then((snapshot) => {
+            let playerIDExists = false;
+
+            snapshot.forEach(function(userSnapshot) {
+                // For each user, check if the playerID matches
+                if (userSnapshot.child('playerID').val() === playerID) {
+                    playerIDExists = true;
+                    return true;  // Exit loop early if match is found
+                }
+            });
+
+            if (playerIDExists) {
+                // Display error if playerID is already taken
+                errorMessage.textContent = "Player ID already used.";
+                errorMessage.style.display = 'block';
+                checkButton.disabled = true;  // Disable button if playerID exists
+            } else {
+                // If playerID is not found, show success message (optional)
+                errorMessage.textContent = "";
+                errorMessage.style.display = 'none';
+                checkButton.disabled = false;  // Enable button if playerID is available
+            }
+        }).catch((error) => {
+            console.error("Error reading data: ", error);
+        });
+    });
+
+
 
         // Function to sign up user
         async function signupUser() {
