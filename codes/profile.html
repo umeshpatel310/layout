@@ -209,6 +209,8 @@
             display: none;
             margin-top: 10px;
         }
+
+        
     </style>
 
 
@@ -358,6 +360,7 @@
     </div>
 
     <div class="input-containersec" id="input-containersec">
+        <p  id="errorMessage" class="error" style="display:none; color: red;font-weight: bold;"></p>
         <input type="text" id="edit-name-inputsec" placeholder="New plyear id"/>
         <button onclick="updateplyearid()" id="save-buttonsec">Save</button>
     </div>
@@ -483,6 +486,55 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const database = getDatabase(app);
+
+
+     // Get the form elements
+     const playerIDInput = document.getElementById('edit-name-inputsec');
+    const checkButton = document.getElementById('save-buttonsec');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Handle input event to check player ID automatically
+    playerIDInput.addEventListener('input', function() {
+        const playerID = playerIDInput.value.trim();
+
+        // Check if playerID is empty
+        if (!playerID) {
+            errorMessage.textContent = "Player ID cannot be empty.";
+            errorMessage.style.display = 'block';
+            checkButton.disabled = true;  // Disable button when input is empty
+            return;
+        }
+
+        // Reference to the users node in Firebase
+        const usersRefcheak = ref(database, 'users');
+
+        // Check if the playerID exists in the users > userID > playerID path
+        get(usersRefcheak).then((snapshot) => {
+            let playerIDExists = false;
+
+            snapshot.forEach(function(userSnapshot) {
+                // For each user, check if the playerID matches
+                if (userSnapshot.child('playerID').val() === playerID) {
+                    playerIDExists = true;
+                    return true;  // Exit loop early if match is found
+                }
+            });
+
+            if (playerIDExists) {
+                // Display error if playerID is already taken
+                errorMessage.textContent = "Player ID already used.";
+                errorMessage.style.display = 'block';
+                checkButton.disabled = true;  // Disable button if playerID exists
+            } else {
+                // If playerID is not found, show success message (optional)
+                errorMessage.textContent = "";
+                errorMessage.style.display = 'none';
+                checkButton.disabled = false;  // Enable button if playerID is available
+            }
+        }).catch((error) => {
+            console.error("Error reading data: ", error);
+        });
+    });
 
     // Function to show notification
     function showNotification(message, type = 'success') {
