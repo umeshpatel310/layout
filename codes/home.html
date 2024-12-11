@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUBG Match Layout</title>
+
+    <link rel="stylesheet" href="Style/hstyle.css">
+    <link rel="stylesheet" href="Style/style.css">
+
+    <style>
+
+        
+        /* Basic styling for the match cards */
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0px;
+            text-align: center;
+        }
+
+        /* Styling for each match card */
+        .match-card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgb(49, 48, 49);
+        }
+
+        .match-header h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .match-header .match-date {
+            font-size: 14px;
+            color: gray;
+        }
+
+        .match-details {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        body {
+            background-color: rgb(235, 226, 226);
+        }
+
+        .details-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .details-row p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .details-row p strong {
+            font-weight: bold;
+        }
+
+        .join-btn-container {
+            text-align: center;
+        }
+
+        .join-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .join-btn:hover {
+            background-color: #e7120b;
+        }
+
+        .joined-btn {
+            background-color: #6c757d;
+            color: white;
+            cursor: not-allowed;
+        }
+
+
+        
+        /* Style for the popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            text-align: left;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+        .popup textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        .popup button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+
+            cursor: pointer;
+        }
+        .popup button:hover {
+            background-color: #0056b3;
+        }
+        .rules-button {
+            padding: 10px 20px;
+            background-color: #c01515;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+        .rules-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="left">
+            <span class="menu-btn" onclick="toggleMenu()">☰</span> <!-- Menu Button -->
+        </div>
+
+        <div class="center">
+            <h1>HonestTurnament.Com</h1>
+        </div>
+        <div class="right">
+            <div class="wallet">
+                <img src="Image/Wallate.png" alt="Wallet" class="icon">
+                <span class="amount" id="wallet-amount">₹0</span> <!-- This will be updated dynamically -->
+            </div>
+            <img src="Image/share.png" alt="Share" class="icon">
+        </div>
+    </header>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">×</a>
+        <a href="profile.html">My Account</a>
+        <a href="wallet.html">Withdraw/Add Wallet</a>
+        <a href="myMatches.html">My Matches</a>
+        <a href="support.html">Support</a>
+        <a href="login.html" onclick="logout()">Log Out</a>
+    </div>
+
+    <script>
+        // Toggle the sidebar menu open/close
+        function toggleMenu() {
+            const sidebar = document.getElementById("mySidebar");
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+            } else {
+                sidebar.style.width = "250px";
+            }
+        }
+
+        // Logout Function (clear local storage/session storage)
+        function logout() {
+            localStorage.removeItem('userUID');  // Remove UID from localStorage
+            window.location.href = "login.html";  // Redirect to login page
+        }
+
+         // Function to open the popup
+         function openPopup() {
+            document.getElementById("popup").style.display = "flex";
+        }
+
+        // Function to close the popup
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+    </script>
+
+    <a href="https://example.com/download" class="download-link">App Download Now</a>
+   
+
+    <div class="optin">
+        <div class="Llist">
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a style="text-decoration-thickness: 5px;" href="Activites/index.html">PUBG</a></li>
+                    <li><a href="Activites/ghareluupchar.html">Free Fire</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="Mlist">
+            <nav class="sec-nav">
+                <ul class="nav-list">
+                    <li><a href="Activites/sehatsundarta.html">BGMI</a></li>
+                    <li><a href="Activites/kavitaye.html">Call Of duty</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <p style="font: small-caps bold 18px/1 sans-serif;; color: black;"> Your Game ID -  <span class="plyearid" id="plyearid"></span></p>
+
+      <!-- Button to open the popup -->
+      <button class="rules-button" onclick="openPopup()">View Rules</button>
+
+      <!-- Popup Window -->
+      <div class="popup" id="popup">
+          <div class="popup-content">
+              <h3>PUBG Tournament Rules</h3>
+              <p>0. <strong>Squed aur Duo me sirf wining prize ko team members me divide kia jayega or players ke kill ke paise unke apne account me alag alag add kiya jayega </strong></p>
+              <p>1. <strong>Eligibility:</strong> Tournament me sirf registered players hi participate kar sakte hain. Players ko valid account aur ID verification ki zarurat hogi.</p>
+              <p>2. <strong>Team Size:</strong> Har team me maximum 4 players honge. Solo aur duo participation bhi allowed hoga, lekin 4-player squad ko zyada priority milegi.</p>
+              <p>3. <strong>Match Format:</strong> Tournament round ka format classic mode (Erangel, Miramar) ya TPP (Third Person Perspective) hoga. Har match me final circle ke andar alive hone wale players ko points milenge.</p>
+              <p>4. <strong>Server Selection:</strong> Sabhi matches ka server India (Asia) region par hoga. Players ko apne internet connection ko ensure karna hoga, taaki unhe server selection me koi issue na ho.</p>
+              <p>5. <strong>Match Start:</strong> Match sirf tab start hoga jab sabhi players ready ho. Agar kisi player ko connection issues ya disconnection hota hai, toh unhe disqualified kiya ja sakta hai.</p>
+              <p>6. <strong>Cheating and Exploiting:</strong> Koi bhi player agar cheating tools, hacks, ya unfair advantage lene ke liye game mechanics ko exploit karta hai, toh us team ko disqualify kar diya jayega.</p>
+              <p>7. <strong>Disconnection Rules:</strong> Agar match ke dauran kisi player ki game disconnect ho jaati hai, toh unhe match ke baad point deduction ho sakta hai. Agar disconnect hone ke baad player return nahi kar sakte, toh wo match lose consider hoga.</p>
+              <p>8. <strong>Match Reporting:</strong> Agar kisi player ko lagta hai ki rules break kiye gaye hain ya koi cheating kar raha hai, toh unhe match ke baad video proof dena hoga. Team captains ko apne respective teams ke actions ke liye responsible maana jayega.</p>
+              <p>9. <strong>Prize Distribution:</strong> Tournament ke winner ko cash prize aur in-game items diye jayenge. Prize distribution details tournament ke end ke baad announce ki jayegi.</p>
+              <p>10. <strong>Behavior:</strong> Players ko ek respectful aur fair attitude maintain karni hogi. Agar koi player abusive ya toxic behavior dikhata hai, toh us team ko disqualify kiya ja sakta hai.</p>
+              <p>11. <strong>lavel:</strong> Har Players ka lavel 40 se kam nahi hona chahiye .match khtam hone ke 30 minut ke andar apka result apko show hoga or wallet add hoga . kisi ko koi dikkat hone par support page par jaye.</p>
+              <br>
+              <button onclick="closePopup()">Close</button>
+          </div>
+      </div>
+
+
+    <div class="container">
+        <div id="match-container">
+            <!-- All matches will be injected here -->
+        </div>
+    </div>
+
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getDatabase, ref, get, update, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
+        // Firebase configuration (replace with your own config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy1GnNAIpiTbF8bcE960GROx9JVyyn3Ro",
+            authDomain: "testapp-6bd8a.firebaseapp.com",
+            databaseURL: "https://testapp-6bd8a-default-rtdb.firebaseio.com",
+            projectId: "testapp-6bd8a",
+            storageBucket: "testapp-6bd8a.appspot.com",
+            messagingSenderId: "1083835564982",
+            appId: "1:1083835564982:web:7ef2ecfe620f7f81d43717",
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth(app);
+
+        async function loadUserData() {
+            const userUID = localStorage.getItem('userUID');  // Get the UID from localStorage
+            if (!userUID) {
+                alert("User not logged in!");
+                window.location.href = "login.html";
+                return;
+            }
+
+            // Get user data from Firebase Realtime Database
+            const userRef = ref(database, 'users/' + userUID);
+            const snapshot = await get(userRef);
+
+            if (snapshot.exists()) {
+                const userData = snapshot.val();
+                console.log("User Data:", userData);
+                // Update wallet balance dynamically
+                document.getElementById('wallet-amount').innerText = `₹${userData.walletAmount || 0}`;
+                document.getElementById('plyearid').innerText = `${userData.playerID|| 0}`;
+
+            } else {
+                console.log("No data available");
+            }
+        }
+
+        // Real-time listener for user data
+        function listenForUserData() {
+            const userUID = localStorage.getItem('userUID');  // Get the UID from localStorage
+            if (!userUID) {
+                alert("User not logged in!");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const userRef = ref(database, 'users/' + userUID);
+            onValue(userRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    document.getElementById('wallet-amount').innerText = `₹${userData.walletAmount || 0}`;
+                } else {
+                    console.log("No data available for user.");
+                }
+            });
+        }
+
+        // Load user data when page loads
+        window.onload = function() {
+            loadUserData();
+            listenForUserData(); // Start real-time listener
+        };
+
+        // Fetch match data from Firebase
+        function fetchAllMatchData(userId) {
+            const matchRef = ref(database, 'pubgmatches/');
+            onValue(matchRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    const matchContainer = document.getElementById('match-container');
+                    matchContainer.innerHTML = ""; // Clear previous content
+
+                    Object.keys(data).forEach(matchId => {
+                        const matchData = data[matchId];
+                        const matchNumber = matchData.matchNumber || "Unknown Match"; // Fallback if matchNumber is undefined
+                        const sanitizedMatchNumber = matchNumber.replace(/[^a-zA-Z0-9]/g, "_");
+
+                        const matchDiv = document.createElement('div');
+                        matchDiv.classList.add('match-card');
+
+                        matchDiv.innerHTML = `
+                            <div class="match-header">
+                                <h3>PUBG ${matchNumber}</h3>
+                                <p class="match-date">Match Date: ${matchData.matchDate}</p>
+                            </div>
+                            <div class="match-details">
+                                <div class="details-row">
+                                    <p><strong>Win Prize:</strong> ₹${matchData.prize}</p>
+                                    <p><strong>Per Kill:</strong> ₹${matchData.perkill}</p>
+                                    <p><strong>Winners:</strong> ${matchData.Twin}</p>
+                                    
+                                </div>
+                                <div class="details-row">
+                                    <p><strong></strong> ${matchData.first}</p>
+                                    <p><strong></strong> ${matchData.sec}</p>
+                                    <p><strong></strong> ${matchData.third}</p>
+                                </div>
+                                <div class="details-row">
+                                    
+                                    <p><strong>Type:</strong> ${matchData.type}</p>
+                                     <p><strong>Map:</strong> ${matchData.map}</p>
+                                    <p><strong>Version:</strong> ${matchData.version}</p>
+                                </div>
+                                <div class="details-row">
+                                   
+                                    <p><strong>Entry Fees:</strong> ₹${matchData.entryFees}</p>
+                                    <p><strong>Total Players:</strong> ${matchData.totalPlayers}/${matchData.maxPlayers}</p>
+                                </div>
+                                 
+                                <div class="details-row" id="roomDetails_${sanitizedMatchNumber}" style="display: none; background-color:  #FFFF00;">
+                                    <p><strong>Room ID:</strong> ${matchData.roomid}</p>
+                                    <p style="background-color:  #FFFF00; margin-top: 5px;"><strong>Pass:</strong> ${matchData.pass}</p>
+                                </div>
+                            </div>
+                            <div class="join-btn-container">
+                                <button class="join-btn" id="joinBtn_${sanitizedMatchNumber}">Join Match</button>
+                            </div>
+                        `;
+                        
+                        matchContainer.appendChild(matchDiv);
+
+                        // Check if user has already joined this match
+                        const userRef = ref(database, `joinmatchs/${sanitizedMatchNumber}/${userId}`);
+                        onValue(userRef, (snapshot) => {
+                            const userData = snapshot.val();
+                            const joinBtn = document.getElementById(`joinBtn_${sanitizedMatchNumber}`);
+                            const roomDetails = document.getElementById(`roomDetails_${sanitizedMatchNumber}`);
+
+                            if (userData) {
+                                joinBtn.textContent = "Already Joined";
+                                joinBtn.disabled = true;
+                                joinBtn.classList.add("joined-btn");
+
+                                // Show room details (room id and pass)
+                                roomDetails.style.display = "block";
+                            }
+
+                            // Attach the event listener to the "Join Match" button
+                            joinBtn.addEventListener('click', function() {
+                                join(sanitizedMatchNumber, matchData.totalPlayers, matchData.maxPlayers, userId);
+                            });
+                        });
+                    });
+                } else {
+                    console.log("No match data available.");
+                }
+            });
+        }
+
+        // Fetch user data after authentication
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const userId = user.uid; // Fetch the logged-in user's UID
+                fetchAllMatchData(userId);
+            } else {
+                console.log("No user is logged in");
+            }
+        });
+
+        // Function to handle the "Join Match" button click
+        function join(sanitizedMatchNumber, totalPlayers, maxPlayers, userId) {
+    const joinBtn = document.getElementById(`joinBtn_${sanitizedMatchNumber}`);
+    
+    // Fetch match data (entryFees)
+    const matchRef = ref(database, `pubgmatches/${sanitizedMatchNumber}`);
+    get(matchRef).then((snapshot) => {
+        const matchData = snapshot.val();
+        const entryFees = parseFloat(matchData.entryFees); // Ensure it's a valid number
+
+        // Check if entryFees is a valid number
+        if (isNaN(entryFees) || entryFees <= 0) {
+            alert("Invalid entry fee amount.");
+            return;
+        }
+
+        // Fetch user data (walletAmount)
+        const userRef = ref(database, `users/${userId}`);
+        get(userRef).then((snapshot) => {
+            const userData = snapshot.val();
+            const walletAmount = userData.walletAmount; // User's current wallet balance
+
+            // Check if the user has enough funds to join the match
+            if (walletAmount < entryFees) {
+                alert("Insufficient balance to join this match.");
+                return;
+            }
+
+            // Check if the match is full
+            if (totalPlayers >= maxPlayers) {
+                alert("Sorry, this match is full.");
+                return;
+            }
+
+            // Deduct the entry fee from the user's wallet
+            const newWalletAmount = walletAmount - entryFees;
+            update(userRef, {
+                walletAmount: newWalletAmount  // Update wallet balance
+            }).then(() => {
+                // Update the totalPlayers count in the match
+                const matchRef = ref(database, `pubgmatches/${sanitizedMatchNumber}`);
+                update(matchRef, {
+                    totalPlayers: totalPlayers + 1  // Increment the totalPlayers count
+                });
+
+                // Mark the user as joined in this match
+                const userMatchRef = ref(database, `joinmatchs/${sanitizedMatchNumber}/${userId}`);
+                update(userMatchRef, {
+                    joined: true  // Mark the user as joined in this match
+                });
+
+                // Record the transaction in the 'transactions' path
+                const transactionRef = ref(database, `transactions/${userId}/${sanitizedMatchNumber}`);
+                const timestamp = new Date().toISOString(); // Get current timestamp
+                update(transactionRef, {
+                    amount: - + entryFees,  // Amount deducte
+                    status: "success",
+                    upiId:sanitizedMatchNumber,
+                    out: "out",
+                    timestamp: timestamp // Timestamp of transaction
+                }).then(() => {
+                    // Change button text to 'Joined' and disable it
+                    joinBtn.textContent = "Joined";
+                    joinBtn.disabled = true;
+                    joinBtn.classList.add("joined-btn");
+
+                    // Optionally, show a success message
+                    alert(`You have successfully joined Match ${sanitizedMatchNumber} and ₹${entryFees} has been deducted from your wallet!`);
+                }).catch((error) => {
+                    console.error("Error recording transaction:", error);
+                    alert("There was an error saving the transaction. Please try again.");
+                });
+
+            }).catch((error) => {
+                console.error("Error updating wallet or match data:", error);
+                alert("There was an error joining the match. Please try again.");
+            });
+        }).catch((error) => {
+            console.error("Error fetching user data:", error);
+            alert("Unable to fetch your user data.");
+        });
+    }).catch((error) => {
+        console.error("Error fetching match data:", error);
+        alert("Unable to fetch match data.");
+    });
+}
+
+    </script>
+
+</body>
+</html>

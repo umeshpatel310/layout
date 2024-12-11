@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Example</title>
+    <style>
+        /* Basic style for the loading spinner */
+        .loading-spinner {
+            display: none;  /* Initially hidden */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 8px solid #f3f3f3; /* Light gray background */
+            border-top: 8px solid #3498db; /* Blue spinner color */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite; /* Spin animation */
+        }
+
+        /* Keyframes for the spinning animation */
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Loading Spinner Example</h1>
+    <button onclick="startLoading()">Start Loading</button>
+    <button onclick="stopLoading()">Stop Loading</button>
+
+    <!-- Loading spinner -->
+    <div id="loadingSpinner" class="loading-spinner"></div>
+
+    <script>
+        // Function to show the loading spinner
+        function startLoading() {
+            document.getElementById('loadingSpinner').style.display = 'block';
+        }
+
+        // Function to hide the loading spinner
+        function stopLoading() {
+            document.getElementById('loadingSpinner').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
