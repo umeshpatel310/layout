@@ -594,7 +594,8 @@ function join(sanitizedMatchNumber, totalPlayers, maxPlayers, userId) {
         const userRef = ref(database, `users/${userId}`);
         get(userRef).then((snapshot) => {
             const userData = snapshot.val();
-            const walletAmount = userData.walletAmount; // User's current wallet balance
+            const walletAmount = userData.walletAmount; 
+            const playerID = userData.playerID;// User's current wallet balance
 
             // Check if the user has enough funds to join the match
             if (walletAmount < entryFees) {
@@ -622,7 +623,8 @@ function join(sanitizedMatchNumber, totalPlayers, maxPlayers, userId) {
                 // Mark the user as joined in this match
                 const userMatchRef = ref(database, `joinmatchs/${sanitizedMatchNumber}/${userId}`);
                 update(userMatchRef, {
-                    joined: true  // Mark the user as joined in this match
+                    joined: true ,
+                    playerID: playerID // Mark the user as joined in this match
                 });
 
                 // Change button text to 'Joined' and disable it
