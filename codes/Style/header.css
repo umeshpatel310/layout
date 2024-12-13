@@ -1,5 +1,6 @@
 body{
   font-family: Arial, sans-serif;
+  
   text-align: center; /* Centers everything inside body */
   
   
@@ -41,6 +42,7 @@ body{
        justify-content: center;
         align-items: center;
         padding: 2px ;
+        
          background-color: #0c0c0c;
          color: white;
        border: 1px solid blue; 
@@ -58,12 +60,12 @@ body{
 }
 
 .menu-btn {
-  font-size: 19px;
+  font-size: 25px;
   background: none;
   border: none;
   color: white;
   cursor: pointer;
-  padding-left: 2px;
+  padding-left: 5px;
 }
 
 .center {
@@ -157,17 +159,12 @@ background-color: #0056b3;
 .optin {
 width: 100%; /* Set container width to 100% */
 padding-left: 5px;
+margin-top: 10px;
+margin-bottom: 5px;
 overflow: hidden; /* Hide the overflow to create a clean scroll effect */
  
 }
 
-/* Llist container */
-/* .Llist {
-display: flex; /* Flexbox use to arrange children horizontally */
-/* animation: scroll-left 20s linear infinite; Animation for scrolling */
-/* } */ 
-
-/* Navigation list */
 .nav-list {
 display: flex; /* Flexbox layout for horizontal items */
 padding: 0;
@@ -175,7 +172,7 @@ margin: 0;
 list-style-type: none; /* Remove bullet points */
 }
 
-/* Each list item styling */
+
 .nav-list li {
 margin-right: 20px; /* Spacing between each list item */
 }
@@ -310,19 +307,21 @@ cursor: not-allowed;
   display: none;
   position: fixed;
   top: 0;
-  left: 0;
+  
+  
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
+  text-align: center;
   align-items: center;
 }
 .popup-content {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  width: 400px;
-  text-align: left;
+  width: 90%;
+  text-align: center;
   overflow-y: auto;
   max-height: 80vh;
 }
@@ -343,15 +342,4 @@ cursor: not-allowed;
 .popup button:hover {
   background-color: #0056b3;
 }
-.rules-button {
-  padding: 3px 3px;
-  background-color: #c01515;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 5px;
-}
-.rules-button:hover {
-  background-color: #218838;
-}
+
