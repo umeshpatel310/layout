@@ -3,58 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUBG Match Layout</title>
+    <title>-234ffnj4-</title>
 
    
     <link rel="stylesheet" href="codes/Style/header.css">
+    <style>
     
 
-
-<style>
-   
-    .slider {
-        width: auto;
-        margin: 0 auto;
-       
+        /* Container for all pages */
+        .page-container {
+          width: 100%;
+          height: 100vh; /* Full viewport height */
+          position: relative;
+          overflow: hidden;
+          margin-top: 10px;
           
+        }
+    
+        /* Individual pages */
+        .page {
+          width: 100%;
+          height: auto;
+          position: absolute;
+          
+          left: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #ffffff;
+          transition: left 0.5s ease-in-out;
+        }
+    
+        /* Default first page position */
+        .page.active {
+          left: 0;
+        }
+    
+        /* Styling for button */
+        .spbtn {
+          padding: 5px 5px;
+          
+          color: rgb(8, 8, 8);
+          border: none;
+          border-radius: 5px;
+          
+         
+          cursor: pointer;
+          font-size: 16px;
+        }
+    
+        .spbtn:hover {
+          background-color: #0056b3;
+        }
+    
+        .page-content {
+          text-align: center;
+        }
+    
+    
+      .active-btn {
+        background-color: red; /* Red background for the active button */
+        color: white; /* White text for the active button */
+      }
+    
         
-        position: relative;
-    }
-    .slides {
-        display: flex;
-        transition: transform 1s ease;
-        
+      </style>
 
-             
-    }
-    .slides img {
-        width: 100%;
-        height: auto;
-    }
-    .slider:hover .next, .slider:hover .prev {
-        opacity: 1;
-    }
-    .next, .prev {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.5);
-        color: rgb(175, 10, 10);
-        padding: 10px;
-        cursor: pointer;
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
-    .next { right: 10px; }
-    .prev { left: 10px; }
-</style>
 
-    <!-- Firebase SDK -->
-   
+
+
 </head>
 <body>
 
-   
 
     <header>
        
@@ -76,32 +96,15 @@
 
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">×</a>
-        <a href="codes/pubg.html">Home</a>
+        <a href="codes/bgmi.html">Home</a>
         <a href="codes/profile.html">My Account</a> 
-        <a href="codes/matchList.html">Match Results</a>     
+        <a  onclick="openPopup()">View Rules</a>
+        <a href="codes/matchList.html">Match Results</a>  
+        <a href="codes/Image/Honesturnament.apk" download>App Download Now</a>       
         <a href="codes/support.html">Support</a>
         <a href="codes/login.html" onclick="logout()">Log Out</a>
     </div>
 
-    <script>
-        // Toggle the sidebar menu open/close
-        function toggleMenu() {
-            const sidebar = document.getElementById("mySidebar");
-            if (sidebar.style.width === "250px") {
-                sidebar.style.width = "0";
-            } else {
-                sidebar.style.width = "250px";
-            }
-        }
-    
-        // Logout Function (clear local storage/session storage)
-        function logout() {
-            localStorage.removeItem('userUID');  // Remove UID from localStorage (or sessionStorage if used)
-            window.location.href = "codes/login.html";  // Redirect to login page
-        }
-    </script>
-
-   <a href="codes/Image/Honesturnament.apk" id="download-link" class="download-link"  download>App Download Now</a>
 
     <div class="optin">
         <div class="Llist">
@@ -109,6 +112,7 @@
                 <ul class="nav-list">
                     <li><a style="text-decoration-thickness: 5px; background-color: rgb(255, 0, 0);" >BGMI</a></li>
                     <li><a href="codes/freefire.html" >Free-fire</a></li>
+                    <p style="font: small-caps bold 12px/1 sans-serif;; color: black;"> Your Game ID -  <span class="plyearid" id="plyearid"></span></p>
                     <!-- <li><a href="codes/bgmi.html">BGMI</a></li> -->
                     <!-- <li><a href="codes/callofduty.html">COD</a></li> -->
                    
@@ -119,54 +123,113 @@
       
     </div>
 
-    <p style="font: small-caps bold 12px/1 sans-serif;; color: black;"> Your Game ID -  <span class="plyearid" id="plyearid"></span></p>
-
-
-     
     
-      <!-- Button to open the popup -->
-      <button class="rules-button" onclick="openPopup()">View Rules</button>
-
-      <!-- Popup Window -->
-      <div class="popup" id="popup">
-          <div class="popup-content">
-              <h3>PUBG Tournament Rules</h3>
-              <p>0. <strong>Squed aur Duo me sirf wining prize ko team members me divide kia jayega or players ke kill ke paise unke apne account me alag alag add kiya jayega </strong></p>
-              <p>1. <strong>Eligibility:</strong> Tournament me sirf registered players hi participate kar sakte hain. Players ko valid account aur ID verification ki zarurat hogi.</p>
-              <p>2. <strong>Team Size:</strong> Har team me maximum 4 players honge. Solo aur duo participation bhi allowed hoga, lekin 4-player squad ko zyada priority milegi.</p>
-              <p>3. <strong>Match Format:</strong> Tournament round ka format classic mode (Erangel, Miramar) ya TPP (Third Person Perspective) hoga. Har match me final circle ke andar alive hone wale players ko points milenge.</p>
-              <p>4. <strong>Server Selection:</strong> Sabhi matches ka server India (Asia) region par hoga. Players ko apne internet connection ko ensure karna hoga, taaki unhe server selection me koi issue na ho.</p>
-              <p>5. <strong>Match Start:</strong> Match sirf tab start hoga jab sabhi players ready ho. Agar kisi player ko connection issues ya disconnection hota hai, toh unhe disqualified kiya ja sakta hai.</p>
-              <p>6. <strong>Cheating and Exploiting:</strong> Koi bhi player agar cheating tools, hacks, ya unfair advantage lene ke liye game mechanics ko exploit karta hai, toh us team ko disqualify kar diya jayega.</p>
-              <p>7. <strong>Disconnection Rules:</strong> Agar match ke dauran kisi player ki game disconnect ho jaati hai, toh unhe match ke baad point deduction ho sakta hai. Agar disconnect hone ke baad player return nahi kar sakte, toh wo match lose consider hoga.</p>
-              <p>8. <strong>Match Reporting:</strong> Agar kisi player ko lagta hai ki rules break kiye gaye hain ya koi cheating kar raha hai, toh unhe match ke baad video proof dena hoga. Team captains ko apne respective teams ke actions ke liye responsible maana jayega.</p>
-              <p>9. <strong>Prize Distribution:</strong> Tournament ke winner ko cash prize aur in-game items diye jayenge. Prize distribution details tournament ke end ke baad announce ki jayegi.</p>
-              <p>10. <strong>Behavior:</strong> Players ko ek respectful aur fair attitude maintain karni hogi. Agar koi player abusive ya toxic behavior dikhata hai, toh us team ko disqualify kiya ja sakta hai.</p>
-              <p>11. <strong>lavel:</strong> Har Players ka lavel 40 se kam nahi hona chahiye .match khtam hone ke 30 minut ke andar apka result apko show hoga or wallet add hoga . kisi ko koi dikkat hone par support page par jaye.</p>
-              <br>
-              <button onclick="closePopup()">Close</button>
-          </div>
-      </div>
-
-         <!-- YouTube Video Thumbnail and Link -->
-         <a href="vnd.youtube://www.youtube.com/channel/UCE2qwxMW9btf6FGkfaw_KzQ" target="_blank">
-    <img class="youtube-thumbnail" src="codes/Image/LIVE TURNAMENT BGMI.jpg" alt="YouTube Video">
-</a>
-
+      
+       <a href="vnd.youtube://www.youtube.com/channel/UCE2qwxMW9btf6FGkfaw_KzQ" target="_blank">
+            <img class="youtube-thumbnail" src="codes/Image/LIVE TURNAMENT BGMI.jpg" alt="YouTube Video">
+      </a>
 
       <marquee style="color: rgb(255, 0, 0); font: bold;">Befor join Match Please Read Rules...!  Befor join Match Please Read Rules...!  Befor join Match Please Read Rules...!</marquee>
 
       <div id="notification" class="notification"></div>
 
-    <div class="container">
-        <div id="match-container">
-            <!-- All matches will be injected here -->
+      <div style="display: flex; margin-top: 10px; justify-content: space-between;padding-left: 50px; padding-right: 50px;">
+        <span class="spbtn" onclick="solopage()">Solo</span>
+        <span class="spbtn" onclick="duopage()">Duo</span>
+        <span class="spbtn" onclick="squedpage()">Squed</span>
+      </div>
+      
+
+      <div class="page-container">
+        <!-- Page 1 -->
+        <div class="page active" id="page1">
+          
+          <div class="container">
+            <div id="match-container">
+                <!-- All matches will be injected here -->
+            </div>
+        </div>
+          
+        </div>
+    
+        <!-- Page 2 -->
+        <div class="page" id="page2">
+          <div class="container">
+            <div id="match-containerDuo">
+                <!-- All matches will be injected here -->
+            </div>
+         </div>
+        </div>
+        <div class="page" id="page3">
+          
+            <div class="container">
+              <div id="match-containerSquad">
+                  <!-- All matches will be injected here -->
+              </div>
+          
+            
+            </div>
+        </div>
+      </div>
+
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h3>PUBG Tournament Rules</h3>
+            <p>0. <strong>Squed aur Duo me sirf wining prize ko team members me divide kia jayega or players ke kill ke paise unke apne account me alag alag add kiya jayega </strong></p>
+            <p>1. <strong>Eligibility:</strong> Tournament me sirf registered players hi participate kar sakte hain. Players ko valid account aur ID verification ki zarurat hogi.</p>
+            <p>2. <strong>Team Size:</strong> Har team me maximum 4 players honge. Solo aur duo participation bhi allowed hoga, lekin 4-player squad ko zyada priority milegi.</p>
+            <p>3. <strong>Match Format:</strong> Tournament round ka format classic mode (Erangel, Miramar) ya TPP (Third Person Perspective) hoga. Har match me final circle ke andar alive hone wale players ko points milenge.</p>
+            <p>4. <strong>Server Selection:</strong> Sabhi matches ka server India (Asia) region par hoga. Players ko apne internet connection ko ensure karna hoga, taaki unhe server selection me koi issue na ho.</p>
+            <p>5. <strong>Match Start:</strong> Match sirf tab start hoga jab sabhi players ready ho. Agar kisi player ko connection issues ya disconnection hota hai, toh unhe disqualified kiya ja sakta hai.</p>
+            <p>6. <strong>Cheating and Exploiting:</strong> Koi bhi player agar cheating tools, hacks, ya unfair advantage lene ke liye game mechanics ko exploit karta hai, toh us team ko disqualify kar diya jayega.</p>
+            <p>7. <strong>Disconnection Rules:</strong> Agar match ke dauran kisi player ki game disconnect ho jaati hai, toh unhe match ke baad point deduction ho sakta hai. Agar disconnect hone ke baad player return nahi kar sakte, toh wo match lose consider hoga.</p>
+            <p>8. <strong>Match Reporting:</strong> Agar kisi player ko lagta hai ki rules break kiye gaye hain ya koi cheating kar raha hai, toh unhe match ke baad video proof dena hoga. Team captains ko apne respective teams ke actions ke liye responsible maana jayega.</p>
+            <p>9. <strong>Prize Distribution:</strong> Tournament ke winner ko cash prize aur in-game items diye jayenge. Prize distribution details tournament ke end ke baad announce ki jayegi.</p>
+            <p>10. <strong>Behavior:</strong> Players ko ek respectful aur fair attitude maintain karni hogi. Agar koi player abusive ya toxic behavior dikhata hai, toh us team ko disqualify kiya ja sakta hai.</p>
+            <p>11. <strong>lavel:</strong> Har Players ka lavel 40 se kam nahi hona chahiye .match khtam hone ke 30 minut ke andar apka result apko show hoga or wallet add hoga . kisi ko koi dikkat hone par support page par jaye.</p>
+            <br>
+            <button onclick="closePopup()">Close</button>
         </div>
     </div>
 
-    <div>
-        <p>Loding</p>
-    </div>
+    <script>
+        // Function to show next page// Function to show the Solo page and highlight the active button
+    function solopage() {
+      document.getElementById('page1').classList.add('active');
+      document.getElementById('page2').classList.remove('active');
+      document.getElementById('page3').classList.remove('active');
+      
+      // Add active class to the Solo button and remove it from others
+      document.querySelector('.spbtn:nth-child(1)').classList.add('active-btn');
+      document.querySelector('.spbtn:nth-child(2)').classList.remove('active-btn');
+      document.querySelector('.spbtn:nth-child(3)').classList.remove('active-btn');
+    }
+    
+    // Function to show the Duo page and highlight the active button
+    function duopage() {
+      document.getElementById('page1').classList.remove('active');
+      document.getElementById('page2').classList.add('active');
+      document.getElementById('page3').classList.remove('active');
+      
+      // Add active class to the Duo button and remove it from others
+      document.querySelector('.spbtn:nth-child(1)').classList.remove('active-btn');
+      document.querySelector('.spbtn:nth-child(2)').classList.add('active-btn');
+      document.querySelector('.spbtn:nth-child(3)').classList.remove('active-btn');
+    }
+    
+    // Function to show the Squad page and highlight the active button
+    function squedpage() {
+      document.getElementById('page1').classList.remove('active');
+      document.getElementById('page2').classList.remove('active');
+      document.getElementById('page3').classList.add('active');
+      
+      // Add active class to the Squad button and remove it from others
+      document.querySelector('.spbtn:nth-child(1)').classList.remove('active-btn');
+      document.querySelector('.spbtn:nth-child(2)').classList.remove('active-btn');
+      document.querySelector('.spbtn:nth-child(3)').classList.add('active-btn');
+    }
+    
+      </script> 
 
 
     <script>
@@ -198,7 +261,7 @@
     </script>
 
 
-    <script type="module">
+<script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
         import { getDatabase, ref, get, update,onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
@@ -223,62 +286,18 @@
         let images = [];
         let currentIndex = 0;
 
-        // Fetch images from Firebase Realtime Database
-        // async function fetchImages() {
-        //     const imagesRef = ref(database, 'images');
-        //     const snapshot = await get(imagesRef);
-        //     if (snapshot.exists()) {
-        //         const data = snapshot.val();
-        //         for (const key in data) {
-        //             images.push(data[key]);
-        //         }
-        //         displayImages();
-        //         startSlider();
-        //     } else {
-        //         console.log("No data available");
-        //     }
-        // }
 
-        // // Display images in the slider
-        // function displayImages() {
-        //     const slidesDiv = document.getElementById('slides');
-        //     images.forEach(imageUrl => {
-        //         const img = document.createElement('img');
-        //         img.src = imageUrl;
-        //         slidesDiv.appendChild(img);
-        //     });
-        // }
-
-        // // Auto Slide function
-      
-
-        // // Move slide function (manual)
-        // function moveSlide(direction) {
-        //     currentIndex += direction;
-        //     if (currentIndex < 0) {
-        //         currentIndex = images.length - 1;
-        //     } else if (currentIndex >= images.length) {
-        //         currentIndex = 0;
-        //     }
-        //     document.querySelector('.slides').style.transform = `translateX(-${currentIndex * 100}%)`;
-        // }
-
-        // // Initialize the slider
-        // fetchImages();
-
-        function loadUserData() {
-    const userUID = localStorage.getItem('userUID');  // Get the UID from localStorage
+ function loadUserData() {
+    const userUID = localStorage.getItem('userUID'); 
     if (!userUID) {
         showNotification("User not logged in!",'error');
         window.location.href = "codes/login.html";
         return;
     }
 
-    // Get a reference to the user's data in the Firebase Realtime Database
-    const userRef = ref(database, 'users/' + userUID);
+const userRef = ref(database, 'users/' + userUID);
 
-    // Set up a real-time listener for changes to the user's data
-    onValue(userRef, (snapshot) => {
+onValue(userRef, (snapshot) => {
         if (snapshot.exists()) {
             const userData = snapshot.val();
             console.log("User Data:", userData);
@@ -294,7 +313,6 @@
     });
 }
 
-// Function to show notification
 function showNotification(message, type = 'success') {
             const notification = document.getElementById('notification');
             notification.innerText = message;
@@ -313,42 +331,64 @@ function showNotification(message, type = 'success') {
             }, 3000);
         }
 
-// Load user data when the page loads
 window.onload = loadUserData;
 
-        function fetchAllMatchData(userId) {
-    const matchRef = ref(database, 'bgmimatchs/');
+function fetchAllMatchData(userId) {
+    const matchRefduo = ref(database, 'bgmimatchs/');
 
     // Set up a real-time listener for changes to the 'bgmimatchs/' path
-    onValue(matchRef, (snapshot) => {
+    onValue(matchRefduo, (snapshot) => {
         const data = snapshot.val();
-        
+
         if (data) {
-            const matchContainer = document.getElementById('match-container');
-            matchContainer.innerHTML = ""; // Clear previous content
+            // Clear previous content
+            document.getElementById('match-container').innerHTML = ""; // Solo matches
+            document.getElementById('match-containerDuo').innerHTML = ""; // Duo matches
+            document.getElementById('match-containerSquad').innerHTML = ""; // Squad matches
 
             // Iterate over each match in the data
             Object.keys(data).forEach(matchId => {
                 const matchData = data[matchId];
                 const matchNumber = matchData.matchNumber || "Unknown Match"; 
                 const sanitizedMatchNumber = sanitizeString(matchNumber);
-                
-                // Create or update the match card
-                let matchDiv = document.getElementById(`match_${sanitizedMatchNumber}`);
-                if (!matchDiv) {
-                    matchDiv = createMatchCard(matchData, sanitizedMatchNumber);
-                    matchContainer.appendChild(matchDiv);
-                } else {
-                    // If the match card already exists, update the content dynamically
-                    updateMatchCard(matchDiv, matchData, sanitizedMatchNumber);
-                }
-                
-                // Start countdown for the match
-                const matchDate = new Date(matchData.date);
-                startCountdown(matchDate, sanitizedMatchNumber);
 
-                // Check if the user has already joined the match
-                handleUserJoinStatus(userId, sanitizedMatchNumber, matchData);
+                // Check match type and add the match to the correct container
+                if (matchData.type === "Solo") {
+                    // Solo match: Display in page1
+                    let matchDiv = document.getElementById(`match_${sanitizedMatchNumber}`);
+                    if (!matchDiv) {
+                        matchDiv = createMatchCard(matchData, sanitizedMatchNumber);
+                        document.getElementById('match-container').appendChild(matchDiv);
+                    } else {
+                        updateMatchCard(matchDiv, matchData, sanitizedMatchNumber);
+                    }
+                    startCountdown(new Date(matchData.date), sanitizedMatchNumber);
+                    handleUserJoinStatus(userId, sanitizedMatchNumber, matchData);
+
+                } else if (matchData.type === "Duo") {
+                    // Duo match: Display in page2
+                    let matchDiv = document.getElementById(`match_${sanitizedMatchNumber}`);
+                    if (!matchDiv) {
+                        matchDiv = createMatchCard(matchData, sanitizedMatchNumber);
+                        document.getElementById('match-containerDuo').appendChild(matchDiv);
+                    } else {
+                        updateMatchCard(matchDiv, matchData, sanitizedMatchNumber);
+                    }
+                    startCountdown(new Date(matchData.date), sanitizedMatchNumber);
+                    handleUserJoinStatus(userId, sanitizedMatchNumber, matchData);
+
+                } else if (matchData.type === "Squad") {
+                    // Squad match: Display in page3
+                    let matchDiv = document.getElementById(`match_${sanitizedMatchNumber}`);
+                    if (!matchDiv) {
+                        matchDiv = createMatchCard(matchData, sanitizedMatchNumber);
+                        document.getElementById('match-containerSquad').appendChild(matchDiv);
+                    } else {
+                        updateMatchCard(matchDiv, matchData, sanitizedMatchNumber);
+                    }
+                    startCountdown(new Date(matchData.date), sanitizedMatchNumber);
+                    handleUserJoinStatus(userId, sanitizedMatchNumber, matchData);
+                }
             });
         } else {
             console.log("No match data available.");
@@ -358,11 +398,11 @@ window.onload = loadUserData;
     });
 }
 
-// Helper function to sanitize match number (replace non-alphanumeric characters)
+
+
 function sanitizeString(str) {
     return str.replace(/[^a-zA-Z0-9]/g, "_");
 }
-
 
 function formatDate(date) {
     const d = new Date(date);
@@ -409,7 +449,7 @@ function startCountdown(matchDate, sanitizedMatchNumber) {
     }, 1000);
 }
 
-// Helper function to create match card HTML structure
+
 function createMatchCard(matchData, sanitizedMatchNumber) {
     const matchDiv = document.createElement('div');
     matchDiv.id = `match_${sanitizedMatchNumber}`;
@@ -454,7 +494,7 @@ function createMatchCard(matchData, sanitizedMatchNumber) {
     return matchDiv;
 }
 
-// Helper function to update existing match card with new data
+
 function updateMatchCard(matchDiv, matchData, sanitizedMatchNumber) {
     const matchHeader = matchDiv.querySelector('.match-header');
     const matchDetails = matchDiv.querySelector('.match-details');
@@ -480,7 +520,7 @@ function updateMatchCard(matchDiv, matchData, sanitizedMatchNumber) {
     detailsRows[3].querySelector('p:nth-child(2)').textContent = `Total Players: ${matchData.totalPlayers}/${matchData.maxPlayers}`;
 }
 
-// Helper function to handle the join status for the user
+
 function handleUserJoinStatus(userId, sanitizedMatchNumber, matchData) {
     const userRef = ref(database, `joinmatchs/${sanitizedMatchNumber}/${userId}`);
 
@@ -511,10 +551,8 @@ function handleUserJoinStatus(userId, sanitizedMatchNumber, matchData) {
         console.error("Error fetching user data: ", error);
     });
 }
-
-    
-        // Fetch user data after authentication
-        onAuthStateChanged(auth, (user) => {
+   
+ onAuthStateChanged(auth, (user) => {
             if (user) {
                 const userId = user.uid; // Fetch the logged-in user's UID
                 fetchAllMatchData(userId);
@@ -523,9 +561,8 @@ function handleUserJoinStatus(userId, sanitizedMatchNumber, matchData) {
             }
         });
     
-        // Function to handle the "Join Match" button click
-       // Function to handle the "Join Match" button click
-       function join(sanitizedMatchNumber, totalPlayers, maxPlayers, userId) {
+     
+ function join(sanitizedMatchNumber, totalPlayers, maxPlayers, userId) {
     const joinBtn = document.getElementById(`joinBtn_${sanitizedMatchNumber}`);
     
     // Fetch match data (entryFees)
@@ -601,11 +638,7 @@ function handleUserJoinStatus(userId, sanitizedMatchNumber, matchData) {
     });
 }
 
-
-
     </script>
-
-    
 
 </body>
 </html>
