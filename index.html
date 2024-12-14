@@ -9,36 +9,37 @@
     <link rel="stylesheet" href="codes/Style/header.css">
     <style>
     
-
-        /* Container for all pages */
-        .page-container {
+ .page-container {
       width: 100%;
       height: 40vh; /* Full viewport height */
       position: relative;
       
       margin-top: 10px;
       
+      
+      
     }
-    
-        /* Individual pages */
-        .page {
-          width: 100%;
-          height: auto;
-          position: absolute;
-          
-          left: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: #ffffff;
-          transition: left 0.5s ease-in-out;
-        }
-    
-        /* Default first page position */
-        .page.active {
-          left: 0;
-        }
-    
+
+    /* Individual pages */
+    .page {
+      /* width: 100%;
+      height: auto;
+      position: absolute;
+      
+      left: 100%; */
+      display: none;
+      transition: left 0.5s ease-in-out;
+      /* justify-content: center;
+      align-items: center;
+      background-color: #ffffff;
+       */
+    }
+
+    /* Default first page position */
+    .page.active {
+      left: 0;
+      display: none;
+    }
         /* Styling for button */
         .spbtn {
           padding: 5px 5px;
@@ -191,44 +192,44 @@
         </div>
     </div>
 
-    <script>
-        // Function to show next page// Function to show the Solo page and highlight the active button
+     <script>
     function solopage() {
-      document.getElementById('page1').classList.add('active');
-      document.getElementById('page2').classList.remove('active');
-      document.getElementById('page3').classList.remove('active');
-      
-      // Add active class to the Solo button and remove it from others
-      document.querySelector('.spbtn:nth-child(1)').classList.add('active-btn');
-      document.querySelector('.spbtn:nth-child(2)').classList.remove('active-btn');
-      document.querySelector('.spbtn:nth-child(3)').classList.remove('active-btn');
+        // Hide all pages
+        document.getElementById('page1').style.display = 'block';
+        document.getElementById('page2').style.display = 'none';
+        document.getElementById('page3').style.display = 'none';
+        
+        document.getElementById('solopage1').style.background = 'red';
+        document.getElementById('duopage2').style.background = 'none';
+        document.getElementById('squedpage3').style.background = 'none';
     }
-    
-    // Function to show the Duo page and highlight the active button
+
     function duopage() {
-      document.getElementById('page1').classList.remove('active');
-      document.getElementById('page2').classList.add('active');
-      document.getElementById('page3').classList.remove('active');
-      
-      // Add active class to the Duo button and remove it from others
-      document.querySelector('.spbtn:nth-child(1)').classList.remove('active-btn');
-      document.querySelector('.spbtn:nth-child(2)').classList.add('active-btn');
-      document.querySelector('.spbtn:nth-child(3)').classList.remove('active-btn');
+        // Hide all pages
+        document.getElementById('page1').style.display = 'none';
+        document.getElementById('page2').style.display = 'block';
+        document.getElementById('page3').style.display = 'none';
+
+        document.getElementById('solopage1').style.background = 'none';
+        document.getElementById('duopage2').style.background = 'red';
+        document.getElementById('squedpage3').style.background = 'none';
     }
-    
-    // Function to show the Squad page and highlight the active button
+
     function squedpage() {
-      document.getElementById('page1').classList.remove('active');
-      document.getElementById('page2').classList.remove('active');
-      document.getElementById('page3').classList.add('active');
-      
-      // Add active class to the Squad button and remove it from others
-      document.querySelector('.spbtn:nth-child(1)').classList.remove('active-btn');
-      document.querySelector('.spbtn:nth-child(2)').classList.remove('active-btn');
-      document.querySelector('.spbtn:nth-child(3)').classList.add('active-btn');
+        // Hide all pages
+        document.getElementById('page1').style.display = 'none';
+        document.getElementById('page2').style.display = 'none';
+        document.getElementById('page3').style.display = 'block';
+
+        
+        document.getElementById('solopage1').style.background = 'none';
+        document.getElementById('duopage2').style.background = 'none';
+        document.getElementById('squedpage3').style.background = 'red';
     }
-    
-      </script> 
+
+    // Initialize to show solo page by default
+    solopage();
+</script>
 
 
     <script>
