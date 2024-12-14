@@ -462,50 +462,55 @@ function startCountdown(matchDate, sanitizedMatchNumber) {
     }, 1000);
 }
 
-
 function createMatchCard(matchData, sanitizedMatchNumber) {
-    const matchDiv = document.createElement('div');
-    matchDiv.id = `match_${sanitizedMatchNumber}`;
-    matchDiv.classList.add('match-card');
+  const matchDiv = document.createElement('div');
+  matchDiv.id = `match_${sanitizedMatchNumber}`;
+  matchDiv.classList.add('match-card');
 
-    matchDiv.innerHTML = `
-        <div class="match-header">
-            <h3>${matchData.matchNumber}</h3>
-           <p class="match-date">Match Date: ${formatDate(matchData.date)}</p>
+  // Check if the match is full
+  const isMatchFull = matchData.totalPlayers >= matchData.maxPlayers;
+  
+  matchDiv.innerHTML = `
+    <div class="match-header">
+        <h3>${matchData.matchNumber}</h3>
+        <p class="match-date">Match Date: ${formatDate(matchData.date)}</p>
+    </div>
+    <div class="match-details">
+        <div class="details-row">
+            <p><strong>Win Prize:</strong> ₹${matchData.prize}</p>
+            <p><strong>Per Kill:</strong> ₹${matchData.perkill}</p>
+            <p><strong>Winners:</strong> ${matchData.Twin}</p>
         </div>
-        <div class="match-details">
-            <div class="details-row">
-                <p><strong>Win Prize:</strong> ₹${matchData.prize}</p>
-                <p><strong>Per Kill:</strong> ₹${matchData.perkill}</p>
-                <p><strong>Winners:</strong> ${matchData.Twin}</p>
-            </div>
-            <div class="details-row">
-                <p><strong>1st:</strong> ₹${matchData.first}</p>
-                <p><strong>2nd:</strong> ₹${matchData.sec}</p>
-                <p><strong>3rd:</strong> ₹${matchData.third}</p>
-            </div>
-            <div class="details-row">
-                <p><strong>Type:</strong> ${matchData.type}</p>
-                <p><strong>Map:</strong> ${matchData.map}</p>
-                <p><strong>Version:</strong> ${matchData.version}</p>
-            </div>
-            <div class="details-row">
-                <p><strong>Entry Fees:</strong> ₹${matchData.entryFees}</p>
-                <p><strong>Total Players:</strong> ${matchData.totalPlayers}/${matchData.maxPlayers}</p>
-            </div>
-            <div class="details-row" id="roomDetails_${sanitizedMatchNumber}" style="display: none; background-color: #FFFF00;">
-                <p><strong>Room ID:</strong> ${matchData.roomid}</p>
-                <p style="background-color: #FFFF00; margin-top: 5px;"><strong>Pass:</strong> ${matchData.pass}</p>
-            </div>
+        <div class="details-row">
+            <p><strong>1st:</strong> ₹${matchData.first}</p>
+            <p><strong>2nd:</strong> ₹${matchData.sec}</p>
+            <p><strong>3rd:</strong> ₹${matchData.third}</p>
         </div>
-        <div class="join-btn-container">
-            <button class="join-btn" id="joinBtn_${sanitizedMatchNumber}">Join Match</button>
+        <div class="details-row">
+            <p><strong>Type:</strong> ${matchData.type}</p>
+            <p><strong>Map:</strong> ${matchData.map}</p>
+            <p><strong>Version:</strong> ${matchData.version}</p>
         </div>
-        <div id="countdown_${sanitizedMatchNumber}" class="countdown-timer"></div>
-    `;
+        <div class="details-row">
+            <p><strong>Entry Fees:</strong> ₹${matchData.entryFees}</p>
+            <p><strong>Total Players:</strong> ${matchData.totalPlayers}/${matchData.maxPlayers}</p>
+        </div>
+        <div class="details-row" id="roomDetails_${sanitizedMatchNumber}" style="display: none; background-color: #FFFF00;">
+            <p><strong>Room ID:</strong> ${matchData.roomid}</p>
+            <p style="background-color: #FFFF00; margin-top: 5px;"><strong>Pass:</strong> ${matchData.pass}</p>
+        </div>
+    </div>
+    <div class="join-btn-container">
+        <button class="join-btn" id="joinBtn_${sanitizedMatchNumber}" ${isMatchFull ? 'disabled' : ''}>
+            ${isMatchFull ? 'Match Full' : 'Join Match'}
+        </button>
+    </div>
+    <div id="countdown_${sanitizedMatchNumber}" class="countdown-timer"></div>
+  `;
 
-    return matchDiv;
+  return matchDiv;
 }
+
 
 
 function updateMatchCard(matchDiv, matchData, sanitizedMatchNumber) {
