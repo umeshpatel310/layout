@@ -19,6 +19,9 @@
         width: 100%;
         margin-top: 10px;
     }
+    .join-btnn{
+        display: none;
+    }
 </style>
 </head>
 <body>
@@ -217,7 +220,7 @@
                         ${imageUrls.map(url => `<img src="${url}" alt="Match Image" class="match-image">`).join('')}
                         <div class="join-btn-container">
                             <button class="join-btn" data-match-number="${sanitizedMatchNumber}">Match Result</button>
-                            <button class="join-btn" data-match-number="${sanitizedMatchNumber}">See Screenshot</button>
+                            <button class="join-btnn" data-match-number="${sanitizedMatchNumber}">See Screenshot</button>
                         </div>
                     `;
                     matchContainer.appendChild(matchDiv);
