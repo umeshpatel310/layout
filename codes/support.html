@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Page</title>
+    <style>
+        /* Basic styles */
+       
+        
+
+        .support-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid rgb(12, 12, 12);
+        }
+
+        .support-container input,
+        .support-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .support-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .support-container button:hover {
+            background-color: #45a049;
+        }
+
+        /* Error message style */
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+      
+    </style>
+    <link rel="stylesheet" href="Style/header.css">
+</head>
+<body>
+    <header>
+       
+        <div class="left">
+            <span class="menu-btn" onclick="toggleMenu()">☰</span> <!-- Menu Button -->
+        </div>
+
+        <div class="center">
+            <h1>HonestTurnament.Com</h1>
+        </div>
+        <div class="right">
+            <div class="wallet">
+               
+                <span class="amount" id="wallet-amount" hidden>₹0</span> <!-- This will be updated dynamically -->
+            </div>
+            
+        </div>
+    </header>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">×</a>
+        <a href="bgmi.html">Home</a>
+        <a href="profile.html">My Account</a> 
+        <a href="matchList.html">Match Results</a>   
+        <a href="Image/Honesturnament.apk" download >App Download Now</a>  
+        <a href="support.html">Support</a>
+        <a href="login.html" onclick="logout()">Log Out</a>
+    </div>
+
+    <script>
+        // Toggle the sidebar menu open/close
+        function toggleMenu() {
+            const sidebar = document.getElementById("mySidebar");
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+            } else {
+                sidebar.style.width = "250px";
+            }
+        }
+    
+        // Logout Function (clear local storage/session storage)
+        function logout() {
+            localStorage.removeItem('userUID');  // Remove UID from localStorage (or sessionStorage if used)
+            window.location.href = "login.html";  // Redirect to login page
+        }
+    </script>
+
+
+
+<div class="optin">
+    <div class="Llist">
+        <nav class="main-nav">
+            <ul class="nav-list">
+                <!-- <li><a style="text-decoration-thickness: 5px; " >PUBG</a></li> -->
+                <li><a href="freefire.html" >Free Fire</a></li>
+                <li><a href="bgmi.html">BGMI</a></li>
+                <!-- <li><a href="callofduty.html">Call Of duty</a></li> -->
+            </ul>
+        </nav>
+    </div>
+
+   
+</div>
+
+<h1>Support Page</h1>
+
+<div class="support-container">
+    <h3>Submit Your Support Request</h3>
+    <form id="support-form">
+        <input type="text" id="whatsapp" placeholder="Enter WhatsApp Number" required><br>
+        <input type="text" id="instagram" placeholder="Enter Instagram ID" required><br>
+        <textarea id="complaint" placeholder="Enter your complaint- Hindi / English" rows="4" required></textarea><br>
+        <button type="submit">Submit</button>
+    </form>
+    <p class="error" id="error-message"></p>
+</div>
+
+<!-- Firebase SDK -->
+<script type="module">
+    // Import Firebase SDK modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBy1GnNAIpiTbF8bcE960GROx9JVyyn3Ro",
+        authDomain: "testapp-6bd8a.firebaseapp.com",
+        databaseURL: "https://testapp-6bd8a-default-rtdb.firebaseio.com",
+        projectId: "testapp-6bd8a",
+        storageBucket: "testapp-6bd8a.appspot.com",
+        messagingSenderId: "1083835564982",
+        appId: "1:1083835564982:web:7ef2ecfe620f7f81d43717",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+
+    
+
+    // Submit form data to Firebase
+    document.getElementById('support-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the form from refreshing the page
+        
+        // Get input field values
+        const whatsapp = document.getElementById('whatsapp').value;
+        const instagram = document.getElementById('instagram').value;
+        const complaint = document.getElementById('complaint').value;
+        
+        // Validate the inputs (simple validation for now)
+        if (!whatsapp || !instagram || !complaint) {
+            document.getElementById('error-message').innerText = "Please fill in all fields!";
+            return;
+        } else {
+            document.getElementById('error-message').innerText = ""; // Clear the error message
+        }
+
+        // Get current authenticated user
+        const user = auth.currentUser;
+        if (user) {
+            // Get the unique ID for the user
+            const userId = user.uid;
+
+            // Set the support data in the Firebase Realtime Database
+            const supportRef = ref(database, 'support/' + userId);  // Save under 'support/{userId}'
+            set(supportRef, {
+                userId: userId,  // Save the user ID as well
+                whatsapp: whatsapp,
+                instagram: instagram,
+                complaint: complaint,
+                timestamp: new Date().toISOString() // Add timestamp
+            }).then(() => {
+                alert('Your support request has been submitted successfully!');
+                // Optionally reset the form
+                document.getElementById('support-form').reset();
+            }).catch(error => {
+                console.error('Error submitting support:', error);
+                alert('Error submitting your request. Please try again later.');
+            });
+        } else {
+            // If no user is authenticated, redirect to login page
+            window.location.href = 'login.html';
+        }
+    });
+</script>
+
+</body>
+</html>

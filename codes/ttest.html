@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUBG Match Layout</title>
+
+    <style>
+        /* Basic styling for the match cards */
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0px;
+            text-align: center;
+        }
+
+        /* Styling for each match card */
+        .match-card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .match-header h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .match-header .match-date {
+            font-size: 14px;
+            color: gray;
+        }
+
+        .match-details {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        body {
+            background-color: rgb(172, 165, 165);
+        }
+
+        .details-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .details-row p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .details-row p strong {
+            font-weight: bold;
+        }
+
+        .join-btn-container {
+            text-align: center;
+        }
+
+        .join-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .join-btn:hover {
+            background-color: #e7120b;
+        }
+    </style>
+
+    <!-- Include Firebase Modular SDK (version 9 or above) -->
+    <script type="module">
+        // Import Firebase SDK modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+        
+        // Firebase configuration (replace with your own config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy1GnNAIpiTbF8bcE960GROx9JVyyn3Ro",
+            authDomain: "testapp-6bd8a.firebaseapp.com",
+            databaseURL: "https://testapp-6bd8a-default-rtdb.firebaseio.com",
+            projectId: "testapp-6bd8a",
+            storageBucket: "testapp-6bd8a.appspot.com",
+            messagingSenderId: "1083835564982",
+            appId: "1:1083835564982:web:7ef2ecfe620f7f81d43717",
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Function to fetch match details from Firebase
+        function fetchAllMatchData() {
+            const matchRef = ref(database, 'pubgmatches/');
+            get(matchRef).then((snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    const matchContainer = document.getElementById('match-container');
+                    matchContainer.innerHTML = ""; // Clear previous content
+
+                    // Loop through each match and display its details
+                    Object.keys(data).forEach(matchId => {
+                        const matchData = data[matchId];
+                        const matchDiv = document.createElement('div');
+                        matchDiv.classList.add('match-card'); // Add a class for styling each match card
+
+                        // Generate the layout for each match
+                        matchDiv.innerHTML = `
+                            <div class="match-header">
+                                <h3>PUBG ${matchData.matchNumber}</h3>
+                                <p class="match-date">Match Date: ${matchData.matchDate}</p>
+                            </div>
+                            <div class="match-details">
+                                <div class="details-row">
+                                    <p><strong>Win Prize:</strong> ₹${matchData.prize}</p>
+                                    <p><strong>Per Kill:</strong> ₹${matchData.perkill}</p>
+                                </div>
+                                <div class="details-row">
+                                    <p><strong>Entry Fees:</strong> ₹${matchData.entryFees}</p>
+                                    <p><strong>Winners:</strong> ${matchData.TWin}</p>
+                                </div>
+                                <div class="details-row">
+                                    <p><strong>Type:</strong> ${matchData.type}</p>
+                                    <p><strong>Version:</strong> ${matchData.version}</p>
+                                    <p><strong>Map:</strong> ${matchData.map}</p>
+                                    <p><strong>Total Players:</strong> ${matchData.totalPlayers}/${matchData.maxPlayers}</p>
+                                </div>
+                            </div>
+                            <div class="join-btn-container">
+                                <button class="join-btn" id="joinBtn_${matchId}">Join Match</button>
+                            </div>
+                        `;
+
+                        // Append the match card to the container
+                        matchContainer.appendChild(matchDiv);
+
+                        // Attach the event listener to the "Join Match" button
+                        document.getElementById(`joinBtn_${matchId}`).addEventListener('click', function() {
+                            join(matchId, matchData.totalPlayers, matchData.maxPlayers);
+                        });
+                    });
+                } else {
+                    console.log("No data available for matches.");
+                }
+            }).catch((error) => {
+                console.error("Error fetching data: ", error);
+            });
+        }
+
+        // Fetch all match data when the page loads
+        window.onload = fetchAllMatchData;
+
+        // Function to handle the "Join Match" button click
+        function join(matchId, totalPlayers, maxPlayers) {
+            const joinBtn = document.getElementById(`joinBtn_${matchId}`);
+            
+            // Check if the match is full
+            if (totalPlayers >= maxPlayers) {
+                alert("Sorry, this match is full.");
+                return;
+            }
+
+            // Update the totalPlayers count in the database
+            const matchRef = ref(database, 'pubgmatches/' + matchId);
+            update(matchRef, {
+                totalPlayers: totalPlayers + 1 // Increment the totalPlayers count
+            })
+            .then(() => {
+                // Change button text to 'Joined'
+                joinBtn.textContent = "Joined";
+                joinBtn.disabled = true;  // Optionally, disable the button after joining
+                alert(`You have joined Match ${matchId}!`);
+            })
+            .catch((error) => {
+                console.error("Error updating match data: ", error);
+            });
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <div id="match-container">
+            <!-- All matches will be injected here -->
+        </div>
+    </div>
+
+</body>
+</html>

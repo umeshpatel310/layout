@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="Style/header.css">
+
+    <style>
+          /* Withdrawal form styles */
+          .payment-container {
+            display: grid;
+            background-color: #fff;
+            padding: 10px;
+            
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 3px;
+            border: 1px solid rgb(0, 0, 0);
+        }
+
+        .payment-container input {
+            padding: 5px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 96%;
+            border: 1px solid rgb(48, 42, 42);
+        }
+
+        .payment-container form {
+            display: grid;
+            padding: 5px;
+            margin: 10px 0;
+            align-self: center;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        .payment-container button {
+            width: 100%;
+            padding: 4px;
+            background-color: #185e1b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .payment-container button:hover {
+            background-color: #3a0aaa;
+        }
+
+        .loop input {
+            color: #ccc;
+            width: 0%;
+            border: 0px solid rgb(255, 249, 249);
+        }
+
+        /* Transaction History Section */
+        .transaction-history {
+            margin-top: 20px;
+           
+            width: 100%;
+          
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .transaction-history h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .transaction-item {
+            background-color: #fff;
+            padding: 5px;
+            
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .transaction-item p {
+            margin: 5px 0;
+        }
+
+        .disply{
+            justify-content: space-between;
+            display: flex;
+        }
+    </style>
+     <style>
+        /* Header styles */
+        
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #fffefe;
+            
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Profile container styles */
+        .profile-container {
+            max-width: 100%;
+            margin-top: 30px;
+            background-color: rgb(0, 0, 0);
+            padding: 20px;
+            display: grid;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .profile-container img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+
+        .profile-container h2 {
+            margin-top: 10px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .profile-container p {
+            font-size: 16px;
+            color: white;
+            margin-top: 3px;
+        }
+
+        .wallet-balance {
+            margin-top: 13px;
+            font-size: 14px;
+            color: #eeea10;
+            
+        }
+
+        /* Update profile form styles */
+        .update-profile-container {
+            margin-top: 30px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .update-profile-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .update-profile-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .update-profile-container button:hover {
+            background-color: #45a049;
+        }
+
+        /* Edit option styles */
+        .edit-option {
+            cursor: pointer;
+            color: #887f7f;
+            text-decoration: underline;
+            margin-left: 10px;
+        }
+
+        .editable-field {
+            display: inline-block;
+            padding: 5px;
+            color: white;
+            border-radius: 5px;
+           
+        }
+
+        .editable-input {
+            width: 100%;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .input-container {
+            display: none;
+            margin-top: 10px;
+        }
+        .input-containersec {
+            display: none;
+            margin-top: 10px;
+        }
+
+        
+    </style>
+
+
+
+<style>
+    /* Basic styling */
+   
+
+    .container {
+        text-align: center;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+   
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        background-color: #28a745;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+
+    #popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .popup-content {
+        background-color: #fff;
+        padding: 30px;
+        text-align: center;
+        width: 300px;
+        border-radius: 10px;
+    }
+
+    .popup-content img {
+        width: 100%;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .popup-content input {
+        width: 80%;
+        padding: 10px;
+        margin-bottom: 10px;
+        
+        border-radius: 5px;
+        border: 1px solid #069ec4;
+        margin-top: 5px;
+    }
+
+    .popup-content button {
+        background-color: #007bff;
+        border-radius: 5px;
+    }
+
+    .popup-content button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+</head>
+<body>
+
+    <header>
+       
+        <div class="left">
+            <span class="menu-btn" onclick="toggleMenu()">☰</span> <!-- Menu Button -->
+        </div>
+
+        <div class="center">
+            <h1>HonestTurnament.Com</h1>
+        </div>
+        <div class="right">
+            <div class="wallet">
+               
+                <span class="amount" id="wallet-amount">₹0</span> <!-- This will be updated dynamically -->
+            </div>
+           
+        </div>
+    </header>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">×</a>
+        <a href="bgmi.html">Home</a>
+        <a href="profile.html">My Account</a> 
+        <a href="matchList.html">Match Results</a>   
+        <a href="Image/Honesturnament.apk" download >App Download Now</a>    
+        <a href="support.html">Support</a>
+        <a href="login.html" onclick="logout()">Log Out</a>
+    </div>
+
+    <script>
+        // Toggle the sidebar menu open/close
+        function toggleMenu() {
+            const sidebar = document.getElementById("mySidebar");
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+            } else {
+                sidebar.style.width = "250px";
+            }
+        }
+    
+        // Logout Function (clear local storage/session storage)
+        function logout() {
+            localStorage.removeItem('userUID');  // Remove UID from localStorage (or sessionStorage if used)
+            window.location.href = "login.html";  // Redirect to login page
+        }
+    </script>
+
+<div class="profile-container">
+    <div class="profile">
+
+        <img id="profile-pic" src="Image/profile1.jpg" alt="Profile Picture">
+    </div>
+   
+    <div class="editable-field">
+        <span id="user-name">User_name...</span>
+        <span class="edit-option" id="edit-name-option">edit</span>
+    </div>
+
+    <div class="input-container" id="input-container">
+        <input type="text" id="edit-name-input" placeholder="new username"/>
+        <button onclick="updateusername()" id="save-button">Save</button>
+    </div>
+    <p id="user-email">...</p>
+    <p id="user-number">....</p>
+
+    <div class="editable-field">
+        <span id="plyerid">Your - gameID</span>
+        <span class="edit-option" id="edit-playerid-option">edit</span>
+    </div>
+
+    <div class="input-containersec" id="input-containersec">
+        <p  id="errorMessage" class="error" style="display:none; color: red;font-weight: bold;"></p>
+        <input type="text" id="edit-name-inputsec" placeholder="New plyear id"/>
+        <button onclick="updateplyearid()" id="save-buttonsec">Save</button>
+    </div>
+    <div class="wallet-balance" id="wallet-balance">₹0</div>
+</div>
+
+ <!-- Add Balance Form -->
+<div class="payment-container">
+    
+        <h3>Add Wallet</h3>
+        <input type="number" id="addAmount" placeholder="Enter amount Minimum ₹50" min="50" required>
+        <button style="background-color: blue;" id="submitbtnB">Add</button>
+    
+</div>
+
+<div id="popup">
+    <div class="popup-content">
+        <!-- Image Preview in Popup -->
+        <img src="Image/Qr.jpeg" alt="Download Image" id="popupImage">
+        <!-- Download Button for the Image -->
+        <a > Please Take screenshot And Pay Via Upi</a>
+        <!-- User Input Field -->
+        <input type="text" id="userInput" placeholder="Enter payment Ref number">
+        <button id="submitBtn">Submit</button>
+    </div>
+</div>
+
+    <!-- Withdrawal Form -->
+<div class="payment-container">
+    <h3>Withdraw Amount</h3>
+    <form id="saving">
+        <input type="number" id="sa" placeholder="Enter Amount to Withdraw" required>
+        <input type="text" id="id" placeholder="Enter UPI ID" required>
+        <button type="submit">Withdraw</button>
+    </form>
+</div>
+
+<!-- Custom Notification -->
+<div id="notification" class="notification"></div>
+
+
+
+<!-- Transaction History Section -->
+<div class="transaction-history">
+    <h3>Wallet Transaction History</h3>
+    <div style="margin-bottom: 10px;" id="transaction-list">
+        <!-- Transaction items will be injected here dynamically -->
+    </div>
+</div>
+
+<script>
+    // Getting elements by their IDs
+    const editNameOption = document.getElementById('edit-name-option');
+    const userName = document.getElementById('user-name');
+    const inputContainer = document.getElementById('input-container');
+    const editNameInput = document.getElementById('edit-name-input');
+    const saveButton = document.getElementById('save-button');
+
+    // Edit button click event
+    editNameOption.addEventListener('click', () => {
+        // Show the input field and set the value to the current name
+        inputContainer.style.display = 'block';
+        editNameInput.value = userName.textContent;
+        editNameOption.style.display = 'none';  // Hide the edit button
+    });
+
+    // Save button click event
+    saveButton.addEventListener('click', () => {
+        // Update the user name with the input value
+        userName.textContent = editNameInput.value;
+        inputContainer.style.display = 'none';  // Hide the input field
+        editNameOption.style.display = 'inline';  // Show the edit button again
+    });
+</script>
+
+<script>
+    // Getting elements by their IDs
+    const editNameOptionsec = document.getElementById('edit-playerid-option');
+    const userNamesec = document.getElementById('plyerid');
+    const inputContainersec = document.getElementById('input-containersec');
+    const editNameInputsec = document.getElementById('edit-name-inputsec');
+    const saveButtonsec = document.getElementById('save-buttonsec');
+
+    // Edit button click event
+    editNameOptionsec.addEventListener('click', () => {
+        // Show the input field and set the value to the current name
+        inputContainersec.style.display = 'block';
+        editNameInputsec.value = userNamesec.textContent;
+        editNameOptionsec.style.display = 'none';  // Hide the edit button
+    });
+
+    // Save button click event
+    saveButtonsec.addEventListener('click', () => {
+        // Update the user name with the input value
+        userNamesec.textContent = editNameInputsec.value;
+        inputContainersec.style.display = 'none';  // Hide the input field
+        editNameOptionsec.style.display = 'inline';  // Show the edit button again
+    });
+</script>
+
+
+
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+    import { getDatabase, ref, get, update, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBy1GnNAIpiTbF8bcE960GROx9JVyyn3Ro",
+        authDomain: "testapp-6bd8a.firebaseapp.com",
+        databaseURL: "https://testapp-6bd8a-default-rtdb.firebaseio.com",
+        projectId: "testapp-6bd8a",
+        storageBucket: "testapp-6bd8a.appspot.com",
+        messagingSenderId: "1083835564982",
+        appId: "1:1083835564982:web:7ef2ecfe620f7f81d43717",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+
+
+     // Get the form elements
+     const playerIDInput = document.getElementById('edit-name-inputsec');
+    const checkButton = document.getElementById('save-buttonsec');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Handle input event to check player ID automatically
+    playerIDInput.addEventListener('input', function() {
+        const playerID = playerIDInput.value.trim();
+
+        // Check if playerID is empty
+        if (!playerID) {
+            errorMessage.textContent = "Player ID cannot be empty.";
+            errorMessage.style.display = 'block';
+            checkButton.disabled = true;  // Disable button when input is empty
+            return;
+        }
+
+        // Reference to the users node in Firebase
+        const usersRefcheak = ref(database, 'users');
+
+        // Check if the playerID exists in the users > userID > playerID path
+        get(usersRefcheak).then((snapshot) => {
+            let playerIDExists = false;
+
+            snapshot.forEach(function(userSnapshot) {
+                // For each user, check if the playerID matches
+                if (userSnapshot.child('playerID').val() === playerID) {
+                    playerIDExists = true;
+                    return true;  // Exit loop early if match is found
+                }
+            });
+
+            if (playerIDExists) {
+                // Display error if playerID is already taken
+                errorMessage.textContent = "Player ID already used.";
+                errorMessage.style.display = 'block';
+                checkButton.disabled = true;  // Disable button if playerID exists
+            } else {
+                // If playerID is not found, show success message (optional)
+                errorMessage.textContent = "";
+                errorMessage.style.display = 'none';
+                checkButton.disabled = false;  // Enable button if playerID is available
+            }
+        }).catch((error) => {
+            console.error("Error reading data: ", error);
+        });
+    });
+
+    // Function to show notification
+    function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.innerText = message;
+            notification.style.display = 'block';
+
+            // Change color based on type (success or error)
+            if (type === 'error') {
+                notification.style.backgroundColor = '#f44336'; // Red for error
+            } else {
+                notification.style.backgroundColor = '#4CAF50'; // Green for success
+            }
+
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+
+    let currentUser = null;
+
+    function loadUserProfile() {
+    const user = auth.currentUser;  // Get the current authenticated user
+    currentUser = user;  // Store the user for later use
+
+     // Function to update only wallet amount in Firebase (without affecting other fields)
+     window.updateusername = function() {
+        const newWalletAmount = document.getElementById('edit-name-input').value;
+
+        // Update only the walletAmount field in the user's data
+        const userRef = ref(database, 'users/' + currentUser.uid);
+
+        // Use update() to update only the walletAmount field, leaving other fields unchanged
+        update(userRef, {
+            name: newWalletAmount // Only update walletAmount
+        }).then(() => {
+            showNotification("user name update");
+        }).catch((error) => {
+            showNotification("Error updating user name: " + error.message);
+        }); 
+    } 
+
+    window.updateplyearid = function() {
+        const plyearid = document.getElementById('edit-name-inputsec').value;
+
+        // Update only the walletAmount field in the user's data
+        const userRef = ref(database, 'users/' + currentUser.uid);
+
+        // Use update() to update only the walletAmount field, leaving other fields unchanged
+        update(userRef, {
+            playerID: plyearid // Only update walletAmount
+        }).then(() => {
+            showNotification("Plyaer id  updated");
+        }).catch((error) => {
+            showNotification("Error updating Plyaer id: " + error.message);
+        });
+    }
+
+    if (user) {
+        // Fetch user details from Firebase Realtime Database
+        const userRef = ref(database, 'users/' + user.uid);
+        get(userRef).then(snapshot => {
+            const userData = snapshot.val();
+            
+            // Display the user details on the page
+            document.getElementById('user-name').innerText = userData.name;
+            document.getElementById('user-number').innerText = userData.mobileNumber;
+            document.getElementById('user-email').innerText = userData.email;
+            document.getElementById('plyerid').innerText = userData.playerID;
+
+            // Set Profile Picture (if available)
+            const profilePic = userData.profilePicture || "image/pp.png";
+            // document.getElementById('profile-pic').src = profilePic;
+
+            // Display wallet balance (initial load)
+            const walletAmount = userData.walletAmount || 0;
+            document.getElementById('wallet-balance').innerText = `Wallet Balance: ₹${walletAmount}`;
+            document.getElementById('wallet-amount').innerText = ` ₹${walletAmount}`;
+        }).catch(error => {
+            console.error("Error loading user profile:", error);
+        });
+
+        // Listen for real-time updates to wallet amount
+        const walletRef = ref(database, 'users/' + user.uid + '/walletAmount');
+        onValue(walletRef, (snapshot) => {
+            const walletAmount = snapshot.val() || 0;
+
+            // Update both elements in real-time
+            document.getElementById('wallet-balance').innerText = `Wallet Balance: ₹${walletAmount}`;
+            document.getElementById('wallet-amount').innerText = ` ₹${walletAmount}`;
+        });
+
+    } else {
+        // Redirect to login page if no user is authenticated
+        window.location.href = 'login.html';
+    }
+}
+
+    // Load user profile when page is ready
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            loadUserProfile();  // Load user details if authenticated
+            loadTransactionHistory();  // Load transaction history
+        } else {
+            window.location.href = 'login.html';  // Redirect to login if not authenticated
+        }
+    });
+
+     // Function to show the popup
+     function showPopup() {
+        const amount = document.getElementById("addAmount").value;
+        if (amount && amount >= 50) {
+            document.getElementById("popup").style.display = "flex";
+        } else {
+            
+            showNotification('Please enter a valid amount (Minimum ₹50)', 'error');
+        }
+    }
+
+    // Function to submit the form and save data to Firebase
+    // Function to submit the form and save data to Firebase
+// Function to submit the form and save data to Firebase
+function submitForm() {
+    const amount = document.getElementById("addAmount").value;
+    const userInput = document.getElementById("userInput").value;
+
+    // New fields for saving records
+    const savingAmount = amount; // You can use the same amount or another value if needed
+    const upiId = userInput; // Assuming user input is UPI ID or another required field
+
+    if (amount && userInput && currentUser) {
+        // Get the current timestamp
+        const timestamp = new Date().toISOString();
+
+        // Prepare the data to be saved to Firebase under 'AddAmount'
+        const data = {
+            amount: amount,
+            userInput: userInput,
+            timestamp: timestamp,
+        };
+
+        // Save the data to 'AddAmount/{userId}'
+        const userRef = ref(database, "AddAmount/" + currentUser.uid);
+        push(userRef, data)
+            .then(() => {
+                console.log('Amount data saved under AddAmount.');
+                
+                // Now, save the saving record to 'transactions/{userId}/savingRecords'
+                const savingRef = ref(database, 'transactions/' + currentUser.uid );
+                
+                // Create a new push ID for each saving record
+                const newSavingRef = push(savingRef);
+
+                // Save the saving data with the new generated ID
+                set(newSavingRef, {
+                    amount: savingAmount,
+                    upiId: upiId,
+                    status: "pending",  // Initial status set to 'pending'
+                    out: "Add",         // Set 'out' status as required
+                    timestamp: timestamp
+                })
+                .then(() => {
+                    showNotification("Amount Add Request submitted ");
+
+                    document.getElementById("popup").style.display = "none"; // Hide popup
+                })
+                .catch((error) => {
+                    showNotification("Error Request: " + error.message);
+                    
+                });
+            })
+            .catch((error) => {
+                showNotification("Faild Request add Amount:  " + error.message);
+                
+            });
+    } else {
+        showNotification('Please enter all required fields ', 'error');
+    }
+}
+
+
+
+    // Add event listener to the Add button to show the popup
+    document.getElementById('submitbtnB').addEventListener('click', showPopup);
+
+    // Add event listener to the Submit button
+    document.getElementById('submitBtn').addEventListener('click', submitForm);
+
+    // Close the popup if clicked outside of it
+    window.onclick = function(event) {
+        if (event.target == document.getElementById("popup")) {
+            document.getElementById("popup").style.display = "none";
+        }
+    };
+
+   
+    
+    function formatDate(date) {
+    const d = new Date(date);
+
+    // Get day, month, year
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+
+    // Get hours, minutes, seconds
+    let hours = d.getHours();
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    const seconds = String(d.getSeconds()).padStart(2, '0');
+
+    // Determine AM or PM
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? String(hours).padStart(2, '0') : '12'; // The hour '0' should be '12'
+
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds} ${ampm}`;
+}
+  
+// Function to load transaction history
+function loadTransactionHistory() {
+    if (currentUser) {
+        const transactionRef = ref(database, 'transactions/' + currentUser.uid);  // Reference to the 'transactions' node
+        onValue(transactionRef, (snapshot) => {
+            const transactions = snapshot.val();
+            const transactionList = document.getElementById('transaction-list');
+            transactionList.innerHTML = '';  // Clear existing transactions
+
+            if (transactions) {
+                // Convert the transactions object into an array of objects
+                const transactionArray = Object.keys(transactions).map(transactionId => ({
+                    id: transactionId,
+                    ...transactions[transactionId]
+                }));
+
+                // Sort the transactions by timestamp in descending order (latest first)
+                transactionArray.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+                // Loop through the sorted transactions and display them
+                transactionArray.forEach(transaction => {
+                    const transactionElement = document.createElement('div');
+                    transactionElement.classList.add('transaction-item');
+                    
+                    // Set the status color based on the transaction status
+                    let statusColor = '';
+                    if (transaction.status === 'pending') {
+                        statusColor = 'blue';
+                    } else if (transaction.status === 'success') {
+                        statusColor = 'green';
+                    } else if (transaction.status === 'fail') {
+                        statusColor = 'red';
+                    }
+
+                     // Set the status color based on the transaction status
+                     let outColor = '';
+                    if (transaction.out === 'Add') {
+                        outColor = 'green';
+                    } else if (transaction.out === 'out') {
+                        outColor = 'red';
+                    }
+
+                    transactionElement.innerHTML = `
+                        <div class="disply" id="disid">
+                            <p style="font-size: 11px;"><strong>UPI ID:</strong> ${transaction.upiId}</p>
+                            <p style="font-size: 11px; color: ${statusColor};"><strong>Status:</strong> ${transaction.status}</p>
+                            <p style="font-size: 11px;"><strong>Amount:</strong> ₹${transaction.amount}</p>
+                            <p style="font-size: 11px;"><strong>Time:</strong> ${formatDate(transaction.timestamp)}</p>
+                            <p style="font-size: 11px; color: ${outColor}; "><strong>Type:</strong> ${transaction.out}</p>
+                        </div>
+                    `;
+                    transactionList.appendChild(transactionElement);
+                });
+            } else {
+                transactionList.innerHTML = '<p>No transactions found.</p>';
+            }
+        });
+    }
+}
+
+
+
+    // Handle saving form submission
+    document.getElementById('saving').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const savingAmount = parseFloat(document.getElementById('sa').value);
+        const upiId = document.getElementById('id').value;
+
+        if (isNaN(savingAmount) || savingAmount <= 0) {
+            showNotification('Witdrwal Request Submit');
+            return;
+        }
+
+        if (!upiId) {
+            showNotification('Please enter a valid UPI ID.','error');
+            return;
+        }
+
+        // Fetch current wallet balance
+        const userRef = ref(database, 'users/' + currentUser.uid);
+        get(userRef).then(snapshot => {
+            const userData = snapshot.val();
+            let currentBalance = userData.walletAmount;
+
+            if (currentBalance >= savingAmount) {
+                // Reduce wallet balance
+                const newBalance = currentBalance - savingAmount;
+                update(userRef, { walletAmount: newBalance });
+
+                // Save saving record under 'saved/{userId}/savingRecords' node
+                const savingRef = ref(database, 'transactions/' + currentUser.uid);
+               
+                const newSavingRef = push(savingRef);// Create a new push ID for each saving record
+
+                const savingRef2 = ref(database, 'withdrwal/' + currentUser.uid);
+                const newSavingRef2 = push(savingRef2);
+
+                // Save saving data with the new generated ID
+                set(newSavingRef, {
+                    amount: savingAmount,
+                    upiId: upiId,
+                    status: "pending",
+                    out: "out",
+                    timestamp: new Date().toISOString()
+                }).then(() => {
+                    console.log("Saving details saved successfully.");
+
+                    // Update wallet balance on UI
+                    document.getElementById('wallet-balance').innerText = `Wallet Balance: ₹${newBalance}`;
+
+                    // Clear the form
+                    document.getElementById('sa').value = '';
+                    document.getElementById('id').value = '';
+
+                    // Reload the transaction history
+                    loadTransactionHistory();
+
+                    
+
+                    showNotification('WithDrwal Request  Succsessful');
+                    
+                }).catch((error) => {
+                    console.error("Error saving saving details:", error);
+                });
+
+
+                set(newSavingRef2, {
+                    amount: savingAmount,
+                    upiId: upiId,
+                    status: "pending",
+                    out: "withdrwal",
+                    timestamp: new Date().toISOString()
+                }).then(() => {
+                    
+
+                   
+
+                    // Clear the form
+                    document.getElementById('sa').value = '';
+                    document.getElementById('id').value = '';
+
+                    // Reload the transaction history
+                    loadTransactionHistory();
+
+                    
+                }).catch((error) => {
+                   
+                });
+
+
+            } else {
+                showNotification('Insufficient balance.','error');
+            }
+        }).catch(error => {
+            
+        });
+    });
+</script>
+
+</body>
+</html>
