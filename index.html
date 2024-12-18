@@ -7,7 +7,11 @@
 
    
     <link rel="stylesheet" href="codes/Style/header.css">
-    
+   
+
+
+
+
 </head>
 <body>
 
@@ -47,8 +51,8 @@
             <nav class="main-nav">
                 <ul class="nav-list">
                     <li><a style="text-decoration-thickness: 5px; background-color: rgb(255, 0, 0);" >BGMI</a></li>
-                    <li><a href="codes/freefire.html" >Free-Fire</a></li>
-                     <p style="font: small-caps bold 10px/1 sans-serif;; color: black;"> YourID -  <span class="plyearid" id="plyearid"></span></p>
+                    <li><a href="codes/freefire.html" >Free-fire</a></li>
+                    <p style="font: small-caps bold 10px/1 sans-serif;; color: black;"> YourID -  <span class="plyearid" id="plyearid"></span></p>
                     <!-- <li><a href="codes/bgmi.html">BGMI</a></li> -->
                     <!-- <li><a href="codes/callofduty.html">COD</a></li> -->
                    
@@ -75,39 +79,38 @@
         <span id="squedpage3" class="spbtn" onclick="squedpage()">Squed</span>
       </div>
       
-<div class="page-container">
-    <!-- Page 1 -->
-    <div class="page active" id="page1">
-      
-      <div class="container">
-        <div id="match-container">
-            <!-- All matches will be injected here -->
-        </div>
-        <p style="margin-top: 10px;">No More Matchs</p>
-    </div>
-      
-    </div>
 
-    <!-- Page 2 -->
-    <div class="page" id="page2">
-      <div class="container">
-        <div id="match-containerDuo">
-            <!-- All matches will be injected here -->
+      <div class="page-container">
+        <!-- Page 1 -->
+        <div class="page active" id="page1">
+          
+          <div class="container">
+            <div id="match-container">
+                <!-- All matches will be injected here -->
+            </div>
         </div>
-        <p style="margin-top: 10px;">No More Matchs</p>
-     </div>
-    </div>
-    <div class="page" id="page3">
-      
-        <div class="container">
-          <div id="match-containerSquad">
-              <!-- All matches will be injected here -->
-          </div>
-          <p style="margin-top: 10px;">No More Matchs</p>
-        
+          
         </div>
-    </div>
-  </div>
+    
+        <!-- Page 2 -->
+        <div class="page" id="page2">
+          <div class="container">
+            <div id="match-containerDuo">
+                <!-- All matches will be injected here -->
+            </div>
+         </div>
+        </div>
+        <div class="page" id="page3">
+          
+            <div class="container">
+              <div id="match-containerSquad">
+                  <!-- All matches will be injected here -->
+              </div>
+          
+            
+            </div>
+        </div>
+      </div>
 
     <div class="popup" id="popup">
         <div class="popup-content">
@@ -129,44 +132,44 @@
         </div>
     </div>
 
-     <script>
-    function solopage() {
-        // Hide all pages
-        document.getElementById('page1').style.display = 'block';
-        document.getElementById('page2').style.display = 'none';
-        document.getElementById('page3').style.display = 'none';
-        
-        document.getElementById('solopage1').style.background = 'red';
-        document.getElementById('duopage2').style.background = 'none';
-        document.getElementById('squedpage3').style.background = 'none';
-    }
-
-    function duopage() {
-        // Hide all pages
-        document.getElementById('page1').style.display = 'none';
-        document.getElementById('page2').style.display = 'block';
-        document.getElementById('page3').style.display = 'none';
-
-        document.getElementById('solopage1').style.background = 'none';
-        document.getElementById('duopage2').style.background = 'red';
-        document.getElementById('squedpage3').style.background = 'none';
-    }
-
-    function squedpage() {
-        // Hide all pages
-        document.getElementById('page1').style.display = 'none';
-        document.getElementById('page2').style.display = 'none';
-        document.getElementById('page3').style.display = 'block';
-
-        
-        document.getElementById('solopage1').style.background = 'none';
-        document.getElementById('duopage2').style.background = 'none';
-        document.getElementById('squedpage3').style.background = 'red';
-    }
-
-    // Initialize to show solo page by default
-    solopage();
-</script>
+    <script>
+        function solopage() {
+            // Hide all pages
+            document.getElementById('page1').style.display = 'block';
+            document.getElementById('page2').style.display = 'none';
+            document.getElementById('page3').style.display = 'none';
+            
+            document.getElementById('solopage1').style.background = 'red';
+            document.getElementById('duopage2').style.background = 'none';
+            document.getElementById('squedpage3').style.background = 'none';
+        }
+    
+        function duopage() {
+            // Hide all pages
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').style.display = 'block';
+            document.getElementById('page3').style.display = 'none';
+    
+            document.getElementById('solopage1').style.background = 'none';
+            document.getElementById('duopage2').style.background = 'red';
+            document.getElementById('squedpage3').style.background = 'none';
+        }
+    
+        function squedpage() {
+            // Hide all pages
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').style.display = 'none';
+            document.getElementById('page3').style.display = 'block';
+    
+            
+            document.getElementById('solopage1').style.background = 'none';
+            document.getElementById('duopage2').style.background = 'none';
+            document.getElementById('squedpage3').style.background = 'red';
+        }
+    
+        // Initialize to show solo page by default
+        solopage();
+    </script>
 
 
     <script>
@@ -386,6 +389,7 @@ function startCountdown(matchDate, sanitizedMatchNumber) {
     }, 1000);
 }
 
+
 function createMatchCard(matchData, sanitizedMatchNumber) {
   const matchDiv = document.createElement('div');
   matchDiv.id = `match_${sanitizedMatchNumber}`;
@@ -403,13 +407,20 @@ function createMatchCard(matchData, sanitizedMatchNumber) {
         <div class="details-row">
             <p><strong>Win Prize:</strong> ₹${matchData.prize}</p>
             <p><strong>Per Kill:</strong> ₹${matchData.perkill}</p>
-            <p><strong>Winners:</strong> ${matchData.Twin}</p>
-        </div>
-        <div class="details-row">
+           
+         <div class="dropdown">
+
+         <button> <p><strong>Winners:</strong> ${matchData.Twin}</p></button>
+         <div class="dropdown-content">
             <p><strong>1st:</strong> ₹${matchData.first}</p>
             <p><strong>2nd:</strong> ₹${matchData.sec}</p>
             <p><strong>3rd:</strong> ₹${matchData.third}</p>
-        </div>
+            
+         </div>
+      </div>
+     </div>
+        
+        
         <div class="details-row">
             <p><strong>Type:</strong> ${matchData.type}</p>
             <p><strong>Map:</strong> ${matchData.map}</p>
@@ -434,8 +445,6 @@ function createMatchCard(matchData, sanitizedMatchNumber) {
 
   return matchDiv;
 }
-
-
 
 function updateMatchCard(matchDiv, matchData, sanitizedMatchNumber) {
     const matchHeader = matchDiv.querySelector('.match-header');
