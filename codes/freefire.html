@@ -7,7 +7,7 @@
 
    
     <link rel="stylesheet" href="Style/header.css">
-  
+    
    
 </head>
 <body>
@@ -43,23 +43,8 @@
         <a href="login.html" onclick="logout()">Log Out</a>
     </div>
 
-    <script>
-        // Toggle the sidebar menu open/close
-        function toggleMenu() {
-            const sidebar = document.getElementById("mySidebar");
-            if (sidebar.style.width === "250px") {
-                sidebar.style.width = "0";
-            } else {
-                sidebar.style.width = "250px";
-            }
-        }
-    
-        // Logout Function (clear local storage/session storage)
-        function logout() {
-            localStorage.removeItem('userUID');  // Remove UID from localStorage (or sessionStorage if used)
-            window.location.href = "login.html";  // Redirect to login page
-        }
-    </script>
+   
+   
 
  
     <div class="optin">
@@ -93,44 +78,42 @@
 
       <div id="notification" class="notification"></div>
 
-       <div style="color: white; display: flex; margin-top: 8px; justify-content: space-between;padding-left: 50px; padding-right: 50px; background-color: #0056b3; ">
+      <div style="color: white; display: flex; margin-top: 8px; justify-content: space-between;padding-left: 50px; padding-right: 50px; background-color: #0056b3; ">
         <span id="solopage1" class="spbtn" onclick="solopage()">Solo</span>
         <span id="duopage2" class="spbtn" onclick="duopage()">Duo</span>
         <span id="squedpage3" class="spbtn" onclick="squedpage()">Squed</span>
       </div>
-     <div class="page-container">
-    <!-- Page 1 -->
-    <div class="page active" id="page1">
-      
-      <div class="container">
-        <div id="match-container">
-            <!-- All matches will be injected here -->
+      <div class="page-container">
+        <!-- Page 1 -->
+        <div class="page active" id="page1">
+          
+          <div class="container">
+            <div id="match-container">
+                <!-- All matches will be injected here -->
+            </div>
         </div>
-        <p style="margin-top: 10px;">No More Matchs</p>
-    </div>
-      
-    </div>
-
-    <!-- Page 2 -->
-    <div class="page" id="page2">
-      <div class="container">
-        <div id="match-containerDuo">
-            <!-- All matches will be injected here -->
+          
         </div>
-        <p style="margin-top: 10px;">No More Matchs</p>
-     </div>
-    </div>
-    <div class="page" id="page3">
-      
-        <div class="container">
-          <div id="match-containerSquad">
-              <!-- All matches will be injected here -->
-          </div>
-          <p style="margin-top: 10px;">No More Matchs</p>
-        
+    
+        <!-- Page 2 -->
+        <div class="page" id="page2">
+          <div class="container">
+            <div id="match-containerDuo">
+                <!-- All matches will be injected here -->
+            </div>
+         </div>
         </div>
-    </div>
-  </div>
+        <div class="page" id="page3">
+          
+            <div class="container">
+              <div id="match-containerSquad">
+                  <!-- All matches will be injected here -->
+              </div>
+          
+            
+            </div>
+        </div>
+      </div>
       <div class="popup" id="popup">
         <div class="popup-content">
             <h3>PUBG Tournament Rules</h3>
@@ -151,7 +134,35 @@
         </div>
       </div>
 
+    
     <script>
+        // Toggle the sidebar menu open/close
+        function toggleMenu() {
+            const sidebar = document.getElementById("mySidebar");
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+            } else {
+                sidebar.style.width = "250px";
+            }
+        }
+
+        // Logout Function (clear local storage/session storage)
+        function logout() {
+            localStorage.removeItem('userUID');  // Remove UID from localStorage
+            window.location.href = "login.html";  // Redirect to login page
+        }
+
+         // Function to open the popup
+         function openPopup() {
+            document.getElementById("popup").style.display = "flex";
+        }
+
+        // Function to close the popup
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+    </script>
+ <script>
     function solopage() {
         // Hide all pages
         document.getElementById('page1').style.display = 'block';
@@ -189,34 +200,6 @@
     // Initialize to show solo page by default
     solopage();
 </script>
-    <script>
-        // Toggle the sidebar menu open/close
-        function toggleMenu() {
-            const sidebar = document.getElementById("mySidebar");
-            if (sidebar.style.width === "250px") {
-                sidebar.style.width = "0";
-            } else {
-                sidebar.style.width = "250px";
-            }
-        }
-
-        // Logout Function (clear local storage/session storage)
-        function logout() {
-            localStorage.removeItem('userUID');  // Remove UID from localStorage
-            window.location.href = "login.html";  // Redirect to login page
-        }
-
-         // Function to open the popup
-         function openPopup() {
-            document.getElementById("popup").style.display = "flex";
-        }
-
-        // Function to close the popup
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
-        }
-    </script>
-
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
@@ -406,6 +389,7 @@ function startCountdown(matchDate, sanitizedMatchNumber) {
     }, 1000);
 }
 
+
 function createMatchCard(matchData, sanitizedMatchNumber) {
   const matchDiv = document.createElement('div');
   matchDiv.id = `match_${sanitizedMatchNumber}`;
@@ -420,16 +404,22 @@ function createMatchCard(matchData, sanitizedMatchNumber) {
         <p class="match-date">Match Date: ${formatDate(matchData.date)}</p>
     </div>
     <div class="match-details">
-        <div class="details-row">
+       <div class="details-row">
             <p><strong>Win Prize:</strong> ₹${matchData.prize}</p>
             <p><strong>Per Kill:</strong> ₹${matchData.perkill}</p>
-            <p><strong>Winners:</strong> ${matchData.Twin}</p>
-        </div>
-        <div class="details-row">
+           
+         <div class="dropdown">
+
+         <button> <p><strong>Winners:</strong> ${matchData.Twin}</p></button>
+         <div class="dropdown-content">
             <p><strong>1st:</strong> ₹${matchData.first}</p>
             <p><strong>2nd:</strong> ₹${matchData.sec}</p>
             <p><strong>3rd:</strong> ₹${matchData.third}</p>
-        </div>
+            
+         </div>
+      </div>
+     </div>
+      
         <div class="details-row">
             <p><strong>Type:</strong> ${matchData.type}</p>
             <p><strong>Map:</strong> ${matchData.map}</p>
@@ -454,7 +444,6 @@ function createMatchCard(matchData, sanitizedMatchNumber) {
 
   return matchDiv;
 }
-
 
 
 function updateMatchCard(matchDiv, matchData, sanitizedMatchNumber) {
