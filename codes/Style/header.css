@@ -103,7 +103,59 @@ body{
   text-align: center;
 }
 
+ /* Basic Styles for the Dropdown */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+}
 
+.dropdown button {
+    
+    color: rgb(0, 0, 0);
+    padding: 1px 2px;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    
+    align-items: center;
+   
+}
+
+/* The arrow icon */
+.dropdown button::after {
+    content: "▼";
+    font-size: 14px;
+   
+}
+
+/* The dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #000000;
+    margin-top: 2px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    color: #f9f9f9;
+    padding-left: 5px;
+    padding-right: 5px;
+    
+}
+
+/* Dropdown items */
+
+
+
+
+/* Show the dropdown when hovering */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover button {
+    background-color: #3e8e41;
+}
 
 .left {
   display: flex;
